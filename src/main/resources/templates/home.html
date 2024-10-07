@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taco 키오스크</title>
+    <link th:href="@{/kiosk/css/home.css}"
+          href="../kiosk/css/home.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <!-- 상단 우측 버튼들 -->
+    <div class="top-right-buttons">
+        <button id="admin-btn" class="small-btn">
+            <img src="https://img.icons8.com/material-rounded/24/000000/settings.png" alt="admin-icon"> 어드민
+        </button>
+        <button id="lang-btn" class="small-btn">
+            <img src="https://img.icons8.com/color/24/000000/google-translate.png" alt="lang-icon"> 언어 설정
+        </button>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <img th:src="@{kiosk/img/home_taco.png}" alt="타코 이미지" class="taco-image">
+        <h1>WELCOME</h1>
+        <h2>TACOTICS</h2>
+        <button id="order-btn"
+                th:onclick="|location.href='@{/main}'|"
+                type="button">주문하기</button>
+    </main>
+</div>
+</body>
+</html>

@@ -18,6 +18,4 @@ public class HomeController {
     public String goMain() {
         return "main/main";
     }
-
-    // 임시 (
 }

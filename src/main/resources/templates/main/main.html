@@ -22,7 +22,7 @@
 
             <!-- 메인 메뉴 리스트 -->
             <div class="menu-list">
-                <button class="menu-item">
+                <button class="menu-item" onclick="openPopup()">
                     <img src="https://via.placeholder.com/300x150" alt="소고기 타코 세트">
                     <div class="menu-info">
                         <p>소고기 타코 세트<br>타코 단품 + 음료</p>
@@ -132,7 +132,7 @@
                     <div class="total-quantity">총 수량: 7개</div>
                 </div>
                 <div class="summary-bottom">
-                    <button class="order-btn">
+                    <button class="order-btn" id="order-btn" onclick="openPopupOrder()">
                         주문하기
                     </button>
                 </div>
@@ -148,5 +148,200 @@
         </button>
     </div>
 </div>
+
+<!-- Popup Item Detail -->
+<div id="popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
+    <div style="background-color: white; padding: 20px; position: relative; height: 85%; width: 90%;">
+        <button id="close-btn" style="position: absolute; top: 10px; right: 10px; font-size: 1.5em; background: none; border: none; cursor: pointer;">X</button>
+        <div class="popup-content">
+            <div class="left-section">
+                <img src="https://via.placeholder.com/400x400" alt="타코 이미지">
+                <div class="menu-name">소고기 타코 세트</div>
+                <div class="price">10,000원</div>
+                <div class="option" style="display: flex; align-items: center;">
+                    <div class="option-label" style="margin-right: 10px;">수량</div>
+                    <div class="quantity-controller">
+                        <button onclick="decreaseQuantity()">-</button>
+                        <span class="quantity" id="quantity">3</span>
+                        <button onclick="increaseQuantity()">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="right-section">
+                <div class="option">
+                    <div class="option-label">굽기 선택</div>
+                    <div class="checkbox-container">
+                        <label class="checkbox-item">
+                            <img src="https://via.placeholder.com/150x100" alt="레어">
+                            <div style="display: flex; align-items: center;">
+                            <input type="checkbox" name="doneness">
+                            <span>레어 (40% 익힘)</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-item">
+                            <img src="https://via.placeholder.com/150x100" alt="미디움">
+                            <div style="display: flex; align-items: center;">
+                            <input type="checkbox" name="doneness">
+                            <span>미디움 (70% 익힘)</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-item">
+                            <img src="https://via.placeholder.com/150x100" alt="웰던">
+                            <div style="display: flex; align-items: center;">
+                            <input type="checkbox" name="doneness">
+                            <span>웰던 (100% 익힘)</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="option">
+                    <div class="option-label">야채 선택 (중복 선택 가능)</div>
+                    <div class="checkbox-container">
+                        <label class="checkbox-item">
+                            <img src="https://via.placeholder.com/150x100" alt="옥수수">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" name="vegetable">
+                            <span>옥수수 조금만</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-item">
+                            <img src="https://via.placeholder.com/150x100" alt="양배추">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" name="vegetable">
+                            <span>양배추 조금만</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-item">
+                            <img src="https://via.placeholder.com/150x100" alt="올리브">
+                            <div style="display: flex; align-items: center;">
+                            <input type="checkbox" name="vegetable">
+                            <span>올리브 조금만</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="option">
+                    <div class="option-label">음료 선택</div>
+                    <div class="checkbox-container">
+                        <label class="checkbox-item">
+                            <img src="https://via.placeholder.com/150x100" alt="콜라">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" name="drink">
+                            <span>콜라 (355ml)</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-item">
+                            <img src="https://via.placeholder.com/150x100" alt="사이다">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" name="drink">
+                            <span>사이다 (355ml)</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="complete-button">완료</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup Order -->
+<div id="popup-order-confirmation" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
+    <div style="background-color: white; padding: 20px; position: relative; height: 85%; width: 90%;">
+        <button id="close-button" style="position: absolute; top: 10px; right: 10px; font-size: 1.5em; background: none; border: none; cursor: pointer;">X</button>
+        <div class="popup-content-confirmation">
+            <div class="left-section-confirmation">
+                <div class="order-item">
+                    <img src="https://via.placeholder.com/10x10" alt="타코 이미지">
+                    <div class="order-details">
+                        <span>소고기 타코 세트</span>
+                        <span>수량: 3개</span>
+                        <span>옵션: 레어(40%), 양배추 조금만, 올리브 조금만, 사이다</span>
+                        <span>가격: 30,000원</span>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <img src="https://via.placeholder.com/10x10" alt="타코 이미지">
+                    <div class="order-details">
+                        <span>소고기 타코 세트</span>
+                        <span>수량: 1개</span>
+                        <span>옵션: 웰던(100%), 옥수수 조금만, 콜라</span>
+                        <span>가격: 10,000원</span>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <img src="https://via.placeholder.com/10x10" alt="타코 이미지">
+                    <div class="order-details">
+                        <span>소시지 타코 세트</span>
+                        <span>수량: 2개</span>
+                        <span>옵션: 양배추 조금만, 콜라</span>
+                        <span>가격: 20,000원</span>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <img src="https://via.placeholder.com/10x10" alt="타코 이미지">
+                    <div class="order-details">
+                        <span>소시지 타코</span>
+                        <span>수량: 2개</span>
+                        <span>옵션: 없음</span>
+                        <span>가격: 16,000원</span>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <img src="https://via.placeholder.com/10x10" alt="사이다">
+                    <div class="order-details">
+                        <span>사이다</span>
+                        <span>수량: 1개</span>
+                        <span>옵션: 없음</span>
+                        <span>가격: 2,000원</span>
+                    </div>
+                </div>
+                <div class="total">총 결제 금액 : 78,000원</div>
+            </div>
+            <div class="right-section-confirmation">
+                <div class="checkbox-container">
+                    <div class="checkbox-item">가져가기</div>
+                    <div class="checkbox-item" style="border: 2px solid red;">매장식사</div>
+                </div>
+                <div class="receipt-checkbox">영수증 출력</div>
+
+                <button class="complete-button">결제</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openPopup() {
+        document.getElementById('popup').style.display = 'flex';
+    }
+
+    document.getElementById('close-btn').addEventListener('click', function() {
+        document.getElementById('popup').style.display = 'none';
+    });
+
+    let quantity = 3;
+    function increaseQuantity() {
+        quantity++;
+        document.getElementById("quantity").textContent = quantity;
+    }
+    function decreaseQuantity() {
+        if (quantity > 1) {
+            quantity--;
+            document.getElementById("quantity").textContent = quantity;
+        }
+    }
+
+    function openPopupOrder() {
+        document.getElementById('popup-order-confirmation').style.display = 'flex';
+    }
+
+    document.getElementById('close-button').addEventListener('click', function() {
+        document.getElementById('popup-order-confirmation').style.display = 'none';
+    });
+</script>
 </body>
 </html>

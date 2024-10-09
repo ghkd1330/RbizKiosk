@@ -321,3 +321,147 @@ body {
     justify-content: center; /* 추가: 가로 중앙 정렬 */
 }
 
+/* Popup Item Detail */
+#popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+#popup .popup-content {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    height: 85%;
+    width: 90%;
+    display: flex;
+    gap: 20px;
+}
+#popup .left-section {
+    flex: 2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#popup .left-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+#popup .left-section .menu-name {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+#popup .left-section .price {
+    font-size: 1.2em;
+    color: #555;
+}
+#popup .right-section {
+    flex: 3;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+#popup .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+#popup .option {
+    margin-bottom: 20px;
+}
+#popup .option-label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+#popup .checkbox-container {
+    display: flex;
+    justify-content: space-between;
+}
+#popup .checkbox-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#popup .checkbox-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+#popup .quantity-controller {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#popup .quantity-controller button {
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
+#popup .quantity {
+    font-size: 1.2em;
+}
+#popup .complete-button {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 1.5em;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* Popup Order */
+#popup-order-confirmation {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#popup-order-confirmation .popup-content-confirmation {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    height: 85%;
+    width: 90%;
+    display: flex;
+    gap: 20px;
+}
+
+#popup-order-confirmation .left-section-confirmation {
+    flex: 3;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#popup-order-confirmation .right-section-confirmation {
+    flex: 2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+}

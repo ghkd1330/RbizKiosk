@@ -1,4 +1,4 @@
-package taco.rbiz.controller;
+package taco.rbiz.web.modbus.controller;
 
 import com.ghgande.j2mod.modbus.facade.ModbusTCPMaster;
 import com.ghgande.j2mod.modbus.procimg.InputRegister;
@@ -18,36 +18,39 @@ public class ModbusController {
 //    private static final int ADDRESS = 1; // 고정된 Holding Register 주소
 
     @PostMapping("/sendSignal")
-    public String sendSignal(@RequestParam("value") int value, Model model) {
+    public String sendSignal(@RequestParam("value") int value, @RequestParam("address") int address, Model model) {
         // value가 1 ~ 255 사이의 값인지 확인
         if (value < 1 || value > 255) {
             model.addAttribute("message", "값이 유효하지 않습니다. 1 ~ 255 사이의 값을 입력하세요.");
             return "index";
         }
 
+        ModbusTCPMaster master = null;
         try {
             // Modbus TCP Master 초기화
-            ModbusTCPMaster master = new ModbusTCPMaster(MASTER_IP, MASTER_PORT);
+            master = new ModbusTCPMaster(MASTER_IP, MASTER_PORT);
+            master.setTimeout(3000); // Set Timeout
             master.connect();
 
             // Holding Register에 값 쓰기 (Master에 신호 전송)
-            int address = 1;
             master.writeSingleRegister(SLAVE_ID, address, new SimpleRegister(value));
-            master.disconnect();
 
             // 성공 메시지 반환
             model.addAttribute("message", "Modbus 신호 전송 성공: 주소 " + address + "에 값 " + value + "을(를) 보냈습니다.");
-            master.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("message", "Modbus 신호 전송 실패: " + e.getMessage());
+        } finally {
+            if (master != null) {
+                master.disconnect();
+            }
         }
 
         return "index"; // 결과 페이지로 이동
     }
 
     @GetMapping("/readSignal")
-    public String readSignal(@RequestParam("address") int address, Model model) {
+    public String readSignal(@RequestParam("address-read") int address, Model model) {
         if (address < 0) {
             model.addAttribute("message", "주소가 유효하지 않습니다. 0 이상의 값을 입력하세요.");
             return "index";

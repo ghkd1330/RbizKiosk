@@ -1,347 +1,762 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" style="overflow: hidden; margin: 0;">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, height=device-height">
-    <title>타코 주문 키오스크</title>
-    <link th:href="@{/kiosk/css/main.css}" href="../kiosk/css/main.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kiosk Home</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+<!--    <link th:href="@{/kiosk/css/main.css}"-->
+<!--          href="../kiosk/css/main.css" rel="stylesheet">-->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 전체 화면 컨테이너 */
+        .main-contain {
+            display: grid;
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 740px;
+            background-color: #ffecd1;
+
+            grid-template-columns: 0.20fr 0.8fr repeat(2, 0.5fr) 1.1fr;
+            grid-template-rows: 6fr 2.7fr;
+        }
+
+        .left-side {
+            grid-area: 1 / 1 / 2 / 2;
+            display: flex;
+            justify-content: flex-start;
+            align-items: stretch;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-content: flex-start;
+
+            height: 100%;
+        }
+
+        /* 돌아가기 버튼 */
+        .back-btn {
+            flex-grow: 1;
+            --bs-border-radius: 0;
+            --bs-btn-bg: #000000;
+            --bs-btn-border-color: #000000;
+            --bs-btn-active-bg: #252525;
+            --bs-btn-active-border-bg: #252525;
+            --bs-btn-hover-bg: #252525;
+            --bs-btn-hover-border-color: #252525;
+        }
+
+        /* 사이드 메뉴 버튼 공통 */
+        .side-menu-btn {
+            flex-grow: 7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            --bs-border-radius: 0;
+            --bs-btn-bg: #000000;
+            --bs-btn-border-color: #488ac3;
+            --bs-btn-active-bg: #6f8ac3;
+            --bs-btn-active-border-bg: #6f8ac3;
+            --bs-btn-hover-bg: #6f8ac3;
+            --bs-btn-hover-border-color: #6f8ac3;
+            border-width: 1px 0 1px 0;
+            border-style: solid;
+            border-color: white;
+        }
+
+        /* 세트 버튼 */
+        .set-btn {
+        }
+
+        /* 단품 버튼 */
+        .single-btn {
+        }
+
+        /* 음료 버튼 */
+        .drink-btn {
+        }
+
+        .item-list-main {
+            grid-area: 1 / 2 / 2 / 5;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 1fr 5fr 1fr 5fr 1fr 5fr;
+            grid-column-gap: 5px;
+            grid-row-gap: 5px;
+            overflow-y: auto;
+
+            justify-items: center;
+            align-items: center;
+        }
+
+        hr {
+            background-color: #fff;
+            padding: 0;
+            margin: 0;
+        }
+        hr.hr-2 {
+            border: 0;
+            border-bottom: 2px dashed #000000;
+            background: #999;
+        }
+
+        .title-hr-first {
+            flex-grow: 1;
+        }
+        .title-text {
+            flex-grow: 0;
+        }
+        .title-hr-last {
+            flex-grow: 1;
+        }
+        .title {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .set-title {
+            grid-area: 1 / 1 / 2 / 3;
+        }
+        #b-set {
+            grid-area: 2 / 1 / 3 / 2;
+        }
+        #s-set {
+            grid-area: 2 / 2 / 3 / 3;
+        }
+
+        .single-title {
+            grid-area: 3 / 1 / 4 / 3;
+            padding-top: 5vh;
+        }
+        #b-single {
+            grid-area: 4 / 1 / 5 / 2;
+        }
+        #s-single {
+            grid-area: 4 / 2 / 5 / 3;
+        }
+
+        .drink-title {
+            grid-area: 5 / 1 / 6 / 3;
+            padding-top: 5vh;
+        }
+        #coke {
+            grid-area: 6 / 1 / 7 / 2;
+        }
+        #sprite {
+            grid-area: 6 / 2 / 7 / 3;
+        }
+
+        .cart-footer {
+            grid-area: 2 / 1 / 3 / 3;
+            display: flex;
+            justify-content: flex-start;
+            align-items: stretch;
+            flex-direction: column;
+
+            overflow-y: auto;
+        }
+
+        .preview-cart-items {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+
+            padding: 10px;
+            border-width: 1px 1px 1px 0;
+            border-style: solid;
+            border-color: white;
+            background-color: black;
+            height: 25%;
+        }
+
+        .delete-btn {
+            border: 0;
+            padding-bottom: 4px;
+            padding-left: 2px;
+            background-color: black;
+            color: white;
+        }
+
+        .item-name-price {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-direction: column;
+
+            color: white;
+        }
+
+        .item-quantity-ctrl {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: row;
+
+            padding: 10px;
+            color: white;
+        }
+
+        .item-quantity {
+            padding: 15px;
+        }
+
+        .plus-btn, .minus-btn {
+            font-weight: bold;
+            width: 40px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 2px;
+            font-size: 20px;
+        }
+
+        .order-footer {
+            grid-area: 2 / 3 / 3 / 5;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 1fr 3fr;
+        }
+
+        .total-price, .total-quantity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+
+            border: 1px solid white;
+            background-color: black;
+            color: white;
+        }
+
+        .total-price, .total-quantity > span {
+            text-align: center;
+        }
+
+        .total-price {
+            grid-area: 1 / 1 / 2 / 2;
+        }
+
+        .total-price-text, .total-quantity-text {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+
+        .total-price-result, .total-quantity-result {
+            flex-grow: 2;
+        }
+
+        .total-quantity {
+            grid-area: 1 / 2 / 2 / 3;
+        }
+
+        .order-area {
+            grid-area: 2 / 1 / 3 / 3;
+        }
+
+        .order-btn {
+            width: 100%;
+            height: 100%;
+
+            font-size: xxx-large;
+
+            --bs-border-radius: 0;
+            --bs-btn-bg: #000000;
+            --bs-btn-border-color: #000000;
+            --bs-btn-active-bg: #252525;
+            --bs-btn-active-border-bg: #252525;
+            --bs-btn-hover-bg: #252525;
+            --bs-btn-hover-border-color: #252525;
+            border: 1px solid white;
+        }
+        /* AI Chat Before */
+        .ai-side {
+            grid-area: 1 / 5 / 3 / 6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            background-color: #98b2a2;
+            font-family: fantasy;
+
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .chat-bot-logo {
+            width: 350px;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        /* AI Chat After */
+        .ai-side-after {
+            grid-area: 1 / 5 / 3 / 6;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 3.8fr 1.7fr;
+
+            background-color: #98b2a2;
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .messages {
+            grid-area: 1 / 1 / 2 / 3;
+        }
+        .ai-mic {
+            grid-area: 2 / 1 / 3 / 2;
+            background-color: #414141;
+            display: flex;
+            justify-content: center;
+        }
+        .ai-mic-logo, .admin-mic-logo {
+            position: relative;
+            top: -55px;
+            left: 70px;
+        }
+        .admin-mic {
+            grid-area: 2 / 2 / 3 / 3;
+            background-color: #414141;
+            display: flex;
+            justify-content: center;
+        }
+
+        .message__outer {
+            display: flex;
+        }
+
+        .message__inner {
+            flex: 1;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        /* Inpa Button Style */
+        .buttons {
+            margin: 0;
+            text-align: center;
+        }
+
+        .btn-hover {
+            width: 170px;
+            height: 100px;
+            font-size: 25px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin: 20px;
+            text-align:center;
+            border: none;
+            background-size: 300% 100%;
+
+            border-radius: 20px;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .btn-hover:hover {
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+            box-shadow: 0 4px 15px 0 rgba(154, 154, 154, 0.75);
+        }
+
+        .btn-hover:focus {
+            outline: none;
+        }
+
+        .btn-hover.color-3 {
+            background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+            /*box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);*/
+            /*box-shadow: 0 4px 15px 0 rgba(124, 124, 124, 0.75);*/
+        }
+
+        .btn-hover.color-10 {
+            background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+            /*box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);*/
+            /*box-shadow: 0 4px 15px 0 rgba(124, 124, 124, 0.75);*/
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <!-- 왼쪽 주문 창 (2/3 너비) -->
-    <div class="order-panel">
-        <div class="order-content">
-            <!-- 사이드바 -->
-            <nav class="sidebar">
-                <button class="nav-btn" id="back-btn">뒤로가기</button>
-                <button class="nav-btn" id="set-menu-btn">세트 <span class="badge">2</span></button>
-                <button class="nav-btn" id="single-menu-btn">단품 <span class="badge">2</span></button>
-                <button class="nav-btn" id="drink-menu-btn">음료 <span class="badge">2</span></button>
-            </nav>
 
-            <!-- 메인 메뉴 리스트 -->
-            <div class="menu-list">
-                <button class="menu-item" onclick="openPopup()">
-                    <img src="https://via.placeholder.com/300x150" alt="소고기 타코 세트">
-                    <div class="menu-info">
-                        <p>소고기 타코 세트<br>타코 단품 + 음료</p>
-                        <span>10,000원</span>
-                    </div>
-                </button>
-                <button class="menu-item">
-                    <img src="https://via.placeholder.com/300x150" alt="소시지 타코 세트">
-                    <div class="menu-info">
-                        <p>소시지 타코 세트<br>타코 단품 + 음료</p>
-                        <span>10,000원</span>
-                    </div>
-                </button>
-                <button class="menu-item">
-                    <img src="https://via.placeholder.com/300x150" alt="치킨 타코 세트">
-                    <div class="menu-info">
-                        <p>치킨 타코 세트<br>타코 단품 + 음료</p>
-                        <span>10,000원</span>
-                    </div>
-                </button>
-                <button class="menu-item">
-                    <img src="https://via.placeholder.com/300x150" alt="새우 타코 세트">
-                    <div class="menu-info">
-                        <p>새우 타코 세트<br>타코 단품 + 음료</p>
-                        <span>10,000원</span>
-                    </div>
-                </button>
-                <button class="menu-item">
-                    <img src="https://via.placeholder.com/300x150" alt="베지 타코 세트">
-                    <div class="menu-info">
-                        <p>베지 타코 세트<br>타코 단품 + 음료</p>
-                        <span>10,000원</span>
-                    </div>
-                </button>
-                <button class="menu-item">
-                    <img src="https://via.placeholder.com/300x150" alt="돼지고기 타코 세트">
-                    <div class="menu-info">
-                        <p>돼지고기 타코 세트<br>타코 단품 + 음료</p>
-                        <span>10,000원</span>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-        <!-- 푸터 -->
-        <div class="footer">
-            <div class="order-list">
-                <div class="order-item">
-                    <span><img src="https://via.placeholder.com/10x10" alt="Icon"><span>소고기 타코 세트</span></span>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn">-</button>
-                        <span class="quantity">5</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <span th:class="price">12,000원</span>
-                </div>
-                <div class="order-item">
-                    <span><img src="https://via.placeholder.com/10x10" alt="Icon"><span>소고기 타코 세트</span></span>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn">-</button>
-                        <span class="quantity">5</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <span th:class="price">12,000원</span>
-                </div>
-                <div class="order-item">
-                    <span><img src="https://via.placeholder.com/10x10" alt="Icon"><span>소고기 타코 세트</span></span>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn">-</button>
-                        <span class="quantity">5</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <span th:class="price">12,000원</span>
-                </div>
-                <div class="order-item">
-                    <span><img src="https://via.placeholder.com/10x10" alt="Icon"><span>소고기 타코 세트</span></span>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn">-</button>
-                        <span class="quantity">5</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <span th:class="price">12,000원</span>
-                </div>
-                <div class="order-item">
-                    <span><img src="https://via.placeholder.com/10x10" alt="Icon"><span>소고기 타코 세트</span></span>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn">-</button>
-                        <span class="quantity">5</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <span th:class="price">12,000원</span>
-                </div>
-                <div class="order-item">
-                    <span><img src="https://via.placeholder.com/10x10" alt="Icon"><span>소고기 타코 세트</span></span>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn">-</button>
-                        <span class="quantity">5</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <span th:class="price">12,000원</span>
-                </div>
-                <!-- 추가된 주문 항목들... -->
-            </div>
-            <div class="order-summary">
-                <div class="summary-top">
-                    <div class="total-amount">총 금액: 30,000원</div>
-                    <div class="total-quantity">총 수량: 7개</div>
-                </div>
-                <div class="summary-bottom">
-                    <button class="order-btn" id="order-btn" onclick="openPopupOrder()">
-                        주문하기
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 오른쪽 질문 창 (1/3 너비) -->
-    <div class="question-panel">
-        <button class="question-button">
-            <img src="https://via.placeholder.com/100" alt="질문 아이콘">
-            <p>무엇이든 물어보세요<br>클릭하여 시작하기</p>
+<div class="main-contain">
+    <div class="left-side">
+        <button id="back-btn" class="back-btn btn btn-primary" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5"/>
+            </svg>
+        </button>
+        <button class="side-menu-btn set-btn btn btn-primary" type="button">
+            <span>세트</span>
+        </button>
+        <button class="side-menu-btn single-btn btn btn-primary" type="button">
+            <span>단품</span>
+        </button>
+        <button class="side-menu-btn drink-btn btn btn-primary" type="button">
+            <span>음료</span>
         </button>
     </div>
-</div>
 
-<!-- Popup Item Detail -->
-<div id="popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
-    <div style="background-color: white; padding: 20px; position: relative; height: 85%; width: 90%;">
-        <button id="close-btn" style="position: absolute; top: 10px; right: 10px; font-size: 1.5em; background: none; border: none; cursor: pointer;">X</button>
-        <div class="popup-content">
-            <div class="left-section">
-                <img src="https://via.placeholder.com/400x400" alt="타코 이미지">
-                <div class="menu-name">소고기 타코 세트</div>
-                <div class="price">10,000원</div>
-                <div class="option" style="display: flex; align-items: center;">
-                    <div class="option-label" style="margin-right: 10px;">수량</div>
-                    <div class="quantity-controller">
-                        <button onclick="decreaseQuantity()">-</button>
-                        <span class="quantity" id="quantity">3</span>
-                        <button onclick="increaseQuantity()">+</button>
-                    </div>
-                </div>
+    <div class="item-list-main">
+        <!-- Set Menu -->
+        <div class="title set-title">
+            <hr class="title-hr-first hr-2">
+            <span class="title-text">세트</span>
+            <hr class="title-hr-last hr-2">
+        </div>
+
+        <div id="b-set" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/beef_set.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title">소고기 타코 세트</h5>
+                <p class="menu-info card-text">소고기 타코 단품 + 음료 택 1</p>
+                <p class="menu-price card-text">12,000원</p>
             </div>
-            <div class="right-section">
-                <div class="option">
-                    <div class="option-label">굽기 선택</div>
-                    <div class="checkbox-container">
-                        <label class="checkbox-item">
-                            <img src="https://via.placeholder.com/150x100" alt="레어">
-                            <div style="display: flex; align-items: center;">
-                            <input type="checkbox" name="doneness">
-                            <span>레어 (40% 익힘)</span>
-                            </div>
-                        </label>
-                        <label class="checkbox-item">
-                            <img src="https://via.placeholder.com/150x100" alt="미디움">
-                            <div style="display: flex; align-items: center;">
-                            <input type="checkbox" name="doneness">
-                            <span>미디움 (70% 익힘)</span>
-                            </div>
-                        </label>
-                        <label class="checkbox-item">
-                            <img src="https://via.placeholder.com/150x100" alt="웰던">
-                            <div style="display: flex; align-items: center;">
-                            <input type="checkbox" name="doneness">
-                            <span>웰던 (100% 익힘)</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
+        </div>
 
-                <div class="option">
-                    <div class="option-label">야채 선택 (중복 선택 가능)</div>
-                    <div class="checkbox-container">
-                        <label class="checkbox-item">
-                            <img src="https://via.placeholder.com/150x100" alt="옥수수">
-                            <div style="display: flex; align-items: center;">
-                                <input type="checkbox" name="vegetable">
-                            <span>옥수수 조금만</span>
-                            </div>
-                        </label>
-                        <label class="checkbox-item">
-                            <img src="https://via.placeholder.com/150x100" alt="양배추">
-                            <div style="display: flex; align-items: center;">
-                                <input type="checkbox" name="vegetable">
-                            <span>양배추 조금만</span>
-                            </div>
-                        </label>
-                        <label class="checkbox-item">
-                            <img src="https://via.placeholder.com/150x100" alt="올리브">
-                            <div style="display: flex; align-items: center;">
-                            <input type="checkbox" name="vegetable">
-                            <span>올리브 조금만</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
+        <div id="s-set" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/sausage_set.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title">소시지 타코 세트</h5>
+                <p class="menu-info card-text">소시지 타코 단품 + 음료 택 1</p>
+                <p class="menu-price card-text">10,000원</p>
+            </div>
+        </div>
 
-                <div class="option">
-                    <div class="option-label">음료 선택</div>
-                    <div class="checkbox-container">
-                        <label class="checkbox-item">
-                            <img src="https://via.placeholder.com/150x100" alt="콜라">
-                            <div style="display: flex; align-items: center;">
-                                <input type="checkbox" name="drink">
-                            <span>콜라 (355ml)</span>
-                            </div>
-                        </label>
-                        <label class="checkbox-item">
-                            <img src="https://via.placeholder.com/150x100" alt="사이다">
-                            <div style="display: flex; align-items: center;">
-                                <input type="checkbox" name="drink">
-                            <span>사이다 (355ml)</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
+        <!-- Single Menu -->
+        <div class="title single-title">
+            <hr class="title-hr-first hr-2">
+            <span class="title-text">단품</span>
+            <hr class="title-hr-last hr-2">
+        </div>
 
-                <button class="complete-button">완료</button>
+        <div id="b-single" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/beef_single.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title">소고기 타코 단품</h5>
+                <p class="menu-info card-text">"신선한 소고기와 풍부한 향신료가 어우러진, 매력적인 멕시코식 타코입니다."</p>
+                <p class="menu-price card-text">10,000원</p>
+            </div>
+        </div>
+
+        <div id="s-single" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/sausage_single.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title">소시지 타코 단품</h5>
+                <p class="menu-info card-text">"육즙 가득한 소시지와 신선한 채소가 어우러진, 풍미 가득한 멕시코식 타코입니다."</p>
+                <p class="menu-price card-text">8,000원</p>
+            </div>
+        </div>
+
+        <!-- Drink Menu -->
+        <div class="title drink-title">
+            <hr class="title-hr-first hr-2">
+            <span class="title-text">음료</span>
+            <hr class="title-hr-last hr-2">
+        </div>
+
+        <div id="coke" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/drink_coke.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title">콜라</h5>
+                <p class="menu-info card-text">Coke</p>
+                <p class="menu-price card-text">2,000원</p>
+            </div>
+        </div>
+
+        <div id="sprite" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/drink_cider.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title">사이다</h5>
+                <p class="menu-info card-text">Cider</p>
+                <p class="menu-price card-text">2,000원</p>
+            </div>
+        </div>
+
+        <div style="padding-top: 5vh"></div>
+    </div>
+
+    <div class="cart-footer">
+        <div id="preview-cart-item1" class="preview-cart-items">
+            <button class="delete-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                </svg>
+            </button>
+            <div class="item-name-price">
+                <div class="preview-item-name">소고기 타코 세트</div>
+                <div class="preview-item-price">12,000원</div>
+            </div>
+            <div class="item-quantity-ctrl">
+                <button type="button" class="plus-btn btn btn-danger">+</button>
+                <span class="item-quantity">2</span>
+                <button type="button" class="minus-btn btn btn-danger">-</button>
+            </div>
+        </div>
+        <div id="preview-cart-item2" class="preview-cart-items">
+            <button class="delete-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                </svg>
+            </button>
+            <div class="item-name-price">
+                <div class="preview-item-name">소시지 타코 세트</div>
+                <div class="preview-item-price">10,000원</div>
+            </div>
+            <div class="item-quantity-ctrl">
+                <button type="button" class="plus-btn btn btn-danger">+</button>
+                <span class="item-quantity">1</span>
+                <button type="button" class="minus-btn btn btn-danger">-</button>
+            </div>
+        </div>
+        <div id="preview-cart-item3" class="preview-cart-items">
+            <button class="delete-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                </svg>
+            </button>
+            <div class="item-name-price">
+                <div class="preview-item-name">소시지 타코 단품</div>
+                <div class="preview-item-price">8,000원</div>
+            </div>
+            <div class="item-quantity-ctrl">
+                <button type="button" class="plus-btn btn btn-danger">+</button>
+                <span class="item-quantity">5</span>
+                <button type="button" class="minus-btn btn btn-danger">-</button>
+            </div>
+        </div>
+        <div id="preview-cart-item4" class="preview-cart-items">
+            <button class="delete-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                </svg>
+            </button>
+            <div class="item-name-price">
+                <div class="preview-item-name">콜라</div>
+                <div class="preview-item-price">2,000원</div>
+            </div>
+            <div class="item-quantity-ctrl">
+                <button type="button" class="plus-btn btn btn-danger">+</button>
+                <span class="item-quantity">1</span>
+                <button type="button" class="minus-btn btn btn-danger">-</button>
+            </div>
+        </div>
+        <div id="preview-cart-item5" class="preview-cart-items">
+            <button class="delete-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                </svg>
+            </button>
+            <div class="item-name-price">
+                <div class="preview-item-name">사이다</div>
+                <div class="preview-item-price">2,000원</div>
+            </div>
+            <div class="item-quantity-ctrl">
+                <button type="button" class="plus-btn btn btn-danger">+</button>
+                <span class="item-quantity">2</span>
+                <button type="button" class="minus-btn btn btn-danger">-</button>
             </div>
         </div>
     </div>
+
+    <div class="order-footer">
+        <div class="total-price">
+            <span class="total-price-text">총 가격</span>
+            <span class="total-price-result">80,000원</span>
+        </div>
+        <div class="total-quantity">
+            <span class="total-quantity-text">총 수량</span>
+            <span class="total-quantity-result">11개</span>
+        </div>
+        <div class="order-area">
+            <button class="order-btn btn btn-primary">주문하기</button>
+        </div>
+    </div>
+
+    <button id="ai-start-btn" class="ai-side">
+        <img class="chat-bot-logo" src="/kiosk/img/chatbot_logo_vector.png" alt="chat-bot-logo" style="padding-bottom: 50px">
+        <span class="ai-start-btn-text" style="padding-bottom: 50px; font-size: xx-large">무엇이든 물어보세요</span>
+        <span class="ai-start-btn-text-2" style="font-size: x-large">클릭하여 시작하기</span>
+    </button>
 </div>
 
-<!-- Popup Order -->
-<div id="popup-order-confirmation" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
-    <div style="background-color: white; padding: 20px; position: relative; height: 85%; width: 90%;">
-        <button id="close-button" style="position: absolute; top: 10px; right: 10px; font-size: 1.5em; background: none; border: none; cursor: pointer;">X</button>
-        <div class="popup-content-confirmation">
-            <div class="left-section-confirmation">
-                <div class="order-item">
-                    <img src="https://via.placeholder.com/10x10" alt="타코 이미지">
-                    <div class="order-details">
-                        <span>소고기 타코 세트</span>
-                        <span>수량: 3개</span>
-                        <span>옵션: 레어(40%), 양배추 조금만, 올리브 조금만, 사이다</span>
-                        <span>가격: 30,000원</span>
+<!-- Start AI Chat : Hidden <div> -->
+<div id="ai-chat-div" style="display: none;">
+    <div class="ai-side-after">
+        <div class="messages">
+            <div class="message">
+                <div class="message__outer">
+                    <div class="message__avatar"></div>
+                    <div class="message__inner">
+                        <div class="message__bubble">
+                            bubble!
+                        </div>
+                        <div class="message__actions"></div>
+                        <div class="message__spacer"></div>
                     </div>
+                    <div class="message__status"></div>
                 </div>
-                <div class="order-item">
-                    <img src="https://via.placeholder.com/10x10" alt="타코 이미지">
-                    <div class="order-details">
-                        <span>소고기 타코 세트</span>
-                        <span>수량: 1개</span>
-                        <span>옵션: 웰던(100%), 옥수수 조금만, 콜라</span>
-                        <span>가격: 10,000원</span>
-                    </div>
-                </div>
-                <div class="order-item">
-                    <img src="https://via.placeholder.com/10x10" alt="타코 이미지">
-                    <div class="order-details">
-                        <span>소시지 타코 세트</span>
-                        <span>수량: 2개</span>
-                        <span>옵션: 양배추 조금만, 콜라</span>
-                        <span>가격: 20,000원</span>
-                    </div>
-                </div>
-                <div class="order-item">
-                    <img src="https://via.placeholder.com/10x10" alt="타코 이미지">
-                    <div class="order-details">
-                        <span>소시지 타코</span>
-                        <span>수량: 2개</span>
-                        <span>옵션: 없음</span>
-                        <span>가격: 16,000원</span>
-                    </div>
-                </div>
-                <div class="order-item">
-                    <img src="https://via.placeholder.com/10x10" alt="사이다">
-                    <div class="order-details">
-                        <span>사이다</span>
-                        <span>수량: 1개</span>
-                        <span>옵션: 없음</span>
-                        <span>가격: 2,000원</span>
-                    </div>
-                </div>
-                <div class="total">총 결제 금액 : 78,000원</div>
             </div>
-            <div class="right-section-confirmation">
-                <div class="checkbox-container">
-                    <div class="checkbox-item">가져가기</div>
-                    <div class="checkbox-item" style="border: 2px solid red;">매장식사</div>
-                </div>
-                <div class="receipt-checkbox">영수증 출력</div>
+        </div>
 
-                <button class="complete-button">결제</button>
+        <div class="ai-mic">
+            <div class="buttons">
+                <button id="startButton-ai" class="btn-hover color-3">질문하기</button>
+                <img class="ai-mic-logo" src="/kiosk/img/whitemic_logo_vector.png" alt="mic-logo">
+                <div id="status">대기 중...</div>
+            </div>
+
+            <button id="stopButton" disabled>녹음 정지</button>
+        </div>
+
+        <div class="admin-mic">
+            <div class="buttons">
+                <button id="startButton-admin" class="btn-hover color-10">직원 연결</button>
+                <img class="admin-mic-logo" src="/kiosk/img/agent_logo_vector.png" alt="agent-logo">
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function openPopup() {
-        document.getElementById('popup').style.display = 'flex';
-    }
+    // Touch to Start AI Chat
+    document.getElementById('ai-start-btn').addEventListener('click', function() {
+        let button = document.getElementById('ai-start-btn');
+        let newContent = document.getElementById('ai-chat-div').innerHTML;
 
-    document.getElementById('close-btn').addEventListener('click', function() {
-        document.getElementById('popup').style.display = 'none';
+        // New <div> 생성
+        let tempDiv = document.createElement('div');
+        tempDiv.innerHTML = newContent;
+
+        // tempDiv의 자식 노드를 가져와서 새로운 <div>로 생성
+        let newDiv = tempDiv.firstElementChild;
+
+        // Button을 새로운 <div>로 교체
+        button.parentNode.replaceChild(newDiv, button);
     });
 
-    let quantity = 3;
-    function increaseQuantity() {
-        quantity++;
-        document.getElementById("quantity").textContent = quantity;
-    }
-    function decreaseQuantity() {
-        if (quantity > 1) {
-            quantity--;
-            document.getElementById("quantity").textContent = quantity;
-        }
-    }
+    // Record
+    let mediaRecorder;
+    let audioChunks = [];
+    const startButton = document.getElementById('startButton-ai');
+    const stopButton = document.getElementById('stopButton');
+    const statusDisplay = document.getElementById('status');
 
-    function openPopupOrder() {
-        document.getElementById('popup-order-confirmation').style.display = 'flex';
-    }
-
-    document.getElementById('close-button').addEventListener('click', function() {
-        document.getElementById('popup-order-confirmation').style.display = 'none';
+    startButton.addEventListener('click', () => {
+        startRecording();
+        startButton.disabled = true;
+        stopButton.disabled = false;
+        statusDisplay.textContent = 'Recording...';
     });
+
+    stopButton.addEventListener('click', () => {
+        stopRecording();
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        statusDisplay.textContent = '녹음 파일 업로드 중...';
+    });
+
+    function startRecording() {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, {type:'audio/webm'});
+                    audioChunks = [];
+
+                    // Transmit Audio File to Server
+                    const formData = new FormData();
+                    formData.append('audioFile', audioBlob, 'recording.webm');
+
+                    fetch('/upload-audio', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.text())
+                        .then(data => {
+                            console.log('Server Response: ', data);
+                            statusDisplay.textContent = '녹음 파일 업로드 완료 및 업로드 성공';
+                    })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            statusDisplay.textContent = '업로드 중 오류 발생';
+                    });
+                };
+            })
+            .catch(error => {
+                console.error('Mic Access Error:', error);
+                statusDisplay.textContent = '마이크 엑세스 거부됨';
+            });
+    }
+
+    function stopRecording() {
+        mediaRecorder.stop();
+    }
+
+<!--    function openPopup() {-->
+<!--        document.getElementById('popup').style.display = 'flex';-->
+<!--    }-->
+
+<!--    document.getElementById('close-btn').addEventListener('click', function() {-->
+<!--        document.getElementById('popup').style.display = 'none';-->
+<!--    });-->
+
+<!--    let quantity = 3;-->
+<!--    function increaseQuantity() {-->
+<!--        quantity++;-->
+<!--        document.getElementById("quantity").textContent = quantity;-->
+<!--    }-->
+<!--    function decreaseQuantity() {-->
+<!--        if (quantity > 1) {-->
+<!--            quantity&#45;&#45;;-->
+<!--            document.getElementById("quantity").textContent = quantity;-->
+<!--        }-->
+<!--    }-->
+
+<!--    function openPopupOrder() {-->
+<!--        document.getElementById('popup-order-confirmation').style.display = 'flex';-->
+<!--    }-->
+
+<!--    document.getElementById('close-button').addEventListener('click', function() {-->
+<!--        document.getElementById('popup-order-confirmation').style.display = 'none';-->
+<!--    });-->
 </script>
+
 </body>
 </html>

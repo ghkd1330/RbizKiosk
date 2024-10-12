@@ -1,4 +1,4 @@
-package taco.rbiz.controller;
+package taco.rbiz.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,5 +17,10 @@ public class HomeController {
     @GetMapping("/main")
     public String goMain() {
         return "main/main";
+    }
+
+    @GetMapping("/modbus")
+    public String goModbus() {
+        return "index";
     }
 }

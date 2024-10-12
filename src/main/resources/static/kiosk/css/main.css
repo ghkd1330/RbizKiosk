@@ -4,464 +4,96 @@
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f8f8;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-}
-
-/* 왼쪽 주문 패널 */
-.order-panel {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    background-color: #ffe5b4;
-    height: 100%;
-}
-
-.order-content {
-    display: flex;
-    flex: 1;
-    overflow-y: auto;
-}
-
-/* 사이드바 */
-.sidebar {
-    width: 15%;
-    background-color: #333;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    height: 100%;
-}
-
-.nav-btn {
-    background-color: #444;
-    color: white;
-    border: 1px solid white;
-    padding: 15px;
-    margin-bottom: 0;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
-}
-
-#back-btn {
-    flex-grow: 0;
-}
-
-#set-menu-btn,
-#single-menu-btn,
-#drink-menu-btn {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.nav-btn .badge {
-    background-color: red;
-    padding: 5px 10px;
-    border-radius: 50%;
-    font-size: 1rem;
-    margin-left: 10px;
-}
-
-/* 메인 메뉴 리스트 */
-.menu-list {
-    width: 85%;
+/* 전체 화면 컨테이너 */
+.main-contain {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    overflow-y: auto;
-    padding: 20px;
-    background-color: #fff;
-    height: 100%;
-    justify-items: stretch;
-}
-
-.menu-item {
-    background-color: white;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-.menu-item img {
-    width: 100%;
-    height: 70%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.menu-info {
-    font-size: 1.1rem;
-    text-align: center;
-}
-
-/* 1. .footer에서 align-items를 stretch로 변경 */
-.footer {
-    background-color: #000;
-    color: white;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch; /* 수정: flex-start에서 stretch로 변경 */
-    width: 100%;
-    border-top: 1px solid white;
-}
-
-/* order-list와 order-summary 사이의 경계선 추가 */
-.order-list {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    max-height: 200px;
-    overflow-y: scroll;
-    margin-right: 10px;
-    border-right: 1px solid white; /* 얇은 흰색 경계선 추가 */
-}
-
-/* order-list의 order-item과 footer 사이의 여백 제거 */
-.order-list .order-item:first-child {
-    margin-top: 0;
-}
-
-.order-list .order-item:last-child {
-    margin-bottom: 0;
-}
-
-/* order-item 사이의 얇은 흰색 경계선 추가 */
-.order-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0; /* 위아래 패딩 추가 */
-    border-bottom: 1px solid white; /* 아이템 사이 경계선 추가 */
-}
-
-.order-item .price {
-    margin-right: 5px;
-}
-
-.order-item:last-child {
-    border-bottom: none; /* 마지막 아이템의 경계선 제거 */
-}
-
-.quantity-controls {
-    display: flex;
-    align-items: center;
-}
-
-.quantity-btn {
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    padding: 5px;
-    margin: 0 10px;
-    cursor: pointer;
-}
-
-.order-summary {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.summary-left {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.order-btn {
-    width: 100%;
-    padding: 15px;
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    text-align: center;
-}
-
-/* 오른쪽 질문 패널 */
-.question-panel {
-    flex: 1;
-    background-color: #d2e4dc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.question-button {
-    background-color: white;
-    border: 2px solid #333;
-    border-radius: 50%;
-    width: 300px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-align: center;
-}
-
-.question-button img {
-    width: 100px;
-    height: auto;
-    margin-bottom: 20px;
-}
-
-.question-button p {
-    font-size: 1.2rem;
-    color: #333;
-}
-
-/* 기존 스타일 유지 */
-
-.order-summary {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* 추가: 남은 공간을 차지하도록 설정 */
     padding: 0;
     margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffecd1;
+
+    grid-template-columns: 0.20fr 0.8fr repeat(2, 0.5fr) 1.1fr;
+    grid-template-rows: 6fr 2.7fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
 }
 
-.summary-top {
+.left-side {
+    grid-area: 1 / 1 / 2 / 2;
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 50px; /* 필요에 따라 조절 가능 */
-    margin-bottom: 0; /* 수정: 여백 제거 */
-    font-size: xx-small;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+
+    height: 100%;
 }
 
-.total-amount {
-    width: 50%;
-    text-align: left;
-    font-size: 1rem; /* 폰트 크기를 줄였습니다 */
-    color: white;
+.left-side > button {
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding-left: 10px;
-    border: 1px solid white;
-    box-sizing: border-box; /* 경계선 크기 포함 */
+    --bs-border-radius: 0;
 }
 
-.total-quantity {
-    width: 50%;
-    text-align: left;
-    font-size: 1rem; /* 폰트 크기를 줄였습니다 */
-    color: white;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    border: 1px solid white;
-    box-sizing: border-box; /* 경계선 크기 포함 */
-}
-
-/* 두 번째 행: summary-bottom */
-.summary-bottom {
-    width: 100%;
+/* 돌아가기 버튼 */
+.side-back-btn {
     flex-grow: 1;
-    margin: 0;
-    padding: 0;
+    --bs-btn-bg: #488ac3;
+    --bs-btn-border-color: #488ac3;
+    --bs-btn-active-bg: #6f8ac3;
+    --bs-btn-active-border-bg: #6f8ac3;
+    --bs-btn-hover-bg: #6f8ac3;
+    --bs-btn-hover-border-color: #6f8ac3;
 }
 
-/* 주문하기 버튼 스타일 */
-.order-btn {
-    width: 100%;
-    height: 100%; /* 추가: 부모 요소의 높이를 채우도록 설정 */
-    padding: 0; /* 수정: 패딩 제거 */
-    background-color: transparent;
-    color: white;
-    border: 1px solid white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    text-align: center;
-    margin: 0;
-    display: flex; /* 추가: 텍스트 중앙 정렬을 위해 flex 사용 */
-    align-items: center; /* 추가: 세로 중앙 정렬 */
-    justify-content: center; /* 추가: 가로 중앙 정렬 */
+/* 세트 버튼 */
+.side-set-btn {
+    flex-grow: 7;
+    --bs-btn-bg: #488ac3;
+    --bs-btn-border-color: #488ac3;
+    --bs-btn-active-bg: #6f8ac3;
+    --bs-btn-active-border-bg: #6f8ac3;
+    --bs-btn-hover-bg: #6f8ac3;
+    --bs-btn-hover-border-color: #6f8ac3;
 }
 
-/* Popup Item Detail */
-#popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
-}
-#popup .popup-content {
-    background-color: white;
-    padding: 20px;
-    position: relative;
-    height: 85%;
-    width: 90%;
-    display: flex;
-    gap: 20px;
-}
-#popup .left-section {
-    flex: 2;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-#popup .left-section img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-#popup .left-section .menu-name {
-    font-size: 1.5em;
-    margin: 10px 0;
-}
-#popup .left-section .price {
-    font-size: 1.2em;
-    color: #555;
-}
-#popup .right-section {
-    flex: 3;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-}
-#popup .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 1.5em;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-#popup .option {
-    margin-bottom: 20px;
-}
-#popup .option-label {
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-#popup .checkbox-container {
-    display: flex;
-    justify-content: space-between;
-}
-#popup .checkbox-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-#popup .checkbox-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-#popup .quantity-controller {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-#popup .quantity-controller button {
-    padding: 10px;
-    font-size: 1em;
-    cursor: pointer;
-}
-#popup .quantity {
-    font-size: 1.2em;
-}
-#popup .complete-button {
-    margin-top: 20px;
-    padding: 15px;
-    font-size: 1.5em;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
+/* 단품 버튼 */
+.side-single-btn {
+    flex-grow: 7;
+    --bs-btn-bg: #488ac3;
+    --bs-btn-border-color: #488ac3;
+    --bs-btn-active-bg: #6f8ac3;
+    --bs-btn-active-border-bg: #6f8ac3;
+    --bs-btn-hover-bg: #6f8ac3;
+    --bs-btn-hover-border-color: #6f8ac3;
 }
 
-/* Popup Order */
-#popup-order-confirmation {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
+/* 음료 버튼 */
+.side-drink-btn {
+    flex-grow: 7;
+    --bs-btn-bg: #488ac3;
+    --bs-btn-border-color: #488ac3;
+    --bs-btn-active-bg: #6f8ac3;
+    --bs-btn-active-border-bg: #6f8ac3;
+    --bs-btn-hover-bg: #6f8ac3;
+    --bs-btn-hover-border-color: #6f8ac3;
 }
 
-#popup-order-confirmation .popup-content-confirmation {
-    background-color: white;
-    padding: 20px;
-    position: relative;
-    height: 85%;
-    width: 90%;
-    display: flex;
-    gap: 20px;
+.item-list-main {
+    grid-area: 1 / 2 / 2 / 5;
 }
 
-#popup-order-confirmation .left-section-confirmation {
-    flex: 3;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.cart-footer {
+    grid-area: 2 / 1 / 3 / 3;
 }
 
-#popup-order-confirmation .right-section-confirmation {
-    flex: 2;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    gap: 20px;
+.order-footer {
+    grid-area: 2 / 3 / 3 / 5;
+}
+
+.ai-side {
+    grid-area: 1 / 5 / 3 / 6;
 }

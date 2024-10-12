@@ -4,7 +4,7 @@
     padding: 0;
     margin: 0;
     width: 100vw;
-    height: 100vh;
+    height: 740px;
     background-color: #ffecd1;
     grid-template-columns: 3.8fr 6.1fr 3.8fr;
     grid-template-rows: 2.6fr 3.8fr 2.3fr;

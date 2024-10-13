@@ -1,4 +1,4 @@
-package taco.rbiz.web.modbus.controller;
+package taco.rbiz.web.controller.util;
 
 import com.ghgande.j2mod.modbus.facade.ModbusTCPMaster;
 import com.ghgande.j2mod.modbus.procimg.InputRegister;

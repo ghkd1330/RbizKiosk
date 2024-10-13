@@ -23,6 +23,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'com.ghgande:j2mod:2.5.0' // j2mod for Modbus
+	implementation 'com.squareup.okhttp3:okhttp:4.9.3' // OkHttp for API
+	implementation 'org.json:json:20210307' // JSON for API
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'

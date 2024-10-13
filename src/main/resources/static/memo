@@ -1,0 +1,4 @@
+1. 전송 버튼을 클릭하면 textarea에 입력된 텍스트가 main.html의 <div class="message">에 <p class="from-me margin-t_one">내용</p>로 추가된다.
+2. 또한 전송 버튼을 누를 때 textarea에 입력된 텍스트를 openai api를 통해 gpt4o-2024-05-13 모델에 입력하고, 모델의 출력을 main.html의 <div class="message">에 <p class="from-them margin-t_one">내용</p>로 추가된다.
+
+

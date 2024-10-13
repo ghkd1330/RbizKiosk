@@ -316,20 +316,133 @@
             grid-area: 1 / 5 / 3 / 6;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: 3.8fr 1.7fr;
+            grid-template-rows: 6fr 1.7fr;
 
-            background-color: #98b2a2;
+            background-color: #ffffff;
             border: none;
             padding: 0;
             margin: 0;
             width: 100%;
             height: 100%;
         }
-        .messages {
+        .messages-area {
             grid-area: 1 / 1 / 2 / 3;
+            height: 510px;
+            overflow-y: auto;
         }
+
+        .message {
+            background-color: #fff;
+            border-radius: 0.25rem;
+            display: flex;
+            flex-direction: column;
+            font-size: 1rem;
+            max-width: 600px;
+            padding: 0.5rem 1.5rem;
+        }
+
+        .message p {
+            border-radius: 1.15rem;
+            line-height: 1.25;
+            max-width: 75%;
+            padding: 0.5rem .875rem;
+            position: relative;
+            word-wrap: break-word;
+        }
+        .message p::before,
+        .message p::after {
+            bottom: -0.1rem;
+            content: "";
+            height: 1rem;
+            position: absolute;
+        }
+        p.from-me {
+            align-self: flex-end;
+            background-color: #248bf5;
+            color: #fff;
+        }
+
+        p.from-me::before {
+            border-bottom-left-radius: 0.8rem 0.7rem;
+            border-right: 1rem solid #248bf5;
+            right: -0.35rem;
+            transform: translate(0, -0.1rem);
+        }
+
+        p.from-me::after {
+            background-color: #fff;
+            border-bottom-left-radius: 0.5rem;
+            right: -40px;
+            transform:translate(-30px, -2px);
+            width: 10px;
+        }
+
+        p[class^="from-"] {
+            margin: 0.5rem 0;
+            width: fit-content;
+        }
+
+        p.from-me ~ p.from-me {
+            margin: 0.25rem 0 0;
+        }
+
+        p.from-me ~ p.from-me:not(:last-child) {
+            margin: 0.25rem 0 0;
+        }
+
+        p.from-me ~ p.from-me:last-child {
+            margin-bottom: 0.5rem;
+        }
+
+        p.from-ai {
+            align-items: flex-start;
+            background-color: #e5e5ea;
+            color: #000;
+        }
+
+        p.from-ai:before {
+            border-bottom-right-radius: 0.8rem 0.7rem;
+            border-left: 1rem solid #e5e5ea;
+            left: -0.35rem;
+            transform: translate(0, -0.1rem);
+        }
+
+        p.from-ai::after {
+            background-color: #fff;
+            border-bottom-right-radius: 0.5rem;
+            left: 20px;
+            transform: translate(-30px, -2px);
+            width: 10px;
+        }
+
+        /*.no-tail::before {*/
+        /*    display: none;*/
+        /*}*/
+
+        /*.margin-b_none {*/
+        /*    margin-bottom: 0 !important;*/
+        /*}*/
+
+        /*.margin-b_one {*/
+        /*    margin-bottom: 1rem !important;*/
+        /*}*/
+
+        .margin-t_one {
+            margin-top: 10px !important;
+        }
+
+
+        .ai-side-footer {
+            grid-area: 2 / 1 / 3 / 3;
+            height: 230px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 1fr 0.7fr;
+        }
+
         .ai-mic {
-            grid-area: 2 / 1 / 3 / 2;
+            grid-area: 1 / 1 / 2 / 2;
+            height: 140px;
             background-color: #414141;
             display: flex;
             justify-content: center;
@@ -340,20 +453,56 @@
             left: 70px;
         }
         .admin-mic {
-            grid-area: 2 / 2 / 3 / 3;
+            grid-area: 1 / 2 / 2 / 3;
+            height: 140px;
             background-color: #414141;
             display: flex;
             justify-content: center;
         }
 
-        .message__outer {
+        .stop-and-send {
+            grid-area: 2 / 1 / 3 / 3;
+            background-color: #414141;
+            height: 90px;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+
+            border-top: 1px solid white;
         }
 
-        .message__inner {
-            flex: 1;
-            display: flex;
-            flex-direction: row-reverse;
+        #status-and-text {
+            flex-grow: 6;
+            padding: 0;
+            margin-left: 10px;
+            font-size: 12px;
+            --bs-alert-bg: #ffffff;
+            resize: none;
+        }
+        .alert-secondary {
+            --bs-alert-bg: #e3e3e3;
+        }
+        #stopButton {
+            flex-grow: 1;
+            margin-left: 10px;
+
+            /*--bs-btn-border-color: #488ac3;*/
+            /*--bs-btn-active-bg: #6f8ac3;*/
+            /*--bs-btn-active-border-bg: #6f8ac3;*/
+            --bs-btn-hover-bg: #6f8ac3;
+            --bs-btn-hover-border-color: #6f8ac3;
+        }
+        #sendButton {
+            flex-grow: 1;
+            margin-left: 10px;
+            margin-right: 10px;
+
+            /*--bs-btn-border-color: #488ac3;*/
+            /*--bs-btn-active-bg: #6f8ac3;*/
+            /*--bs-btn-active-border-bg: #6f8ac3;*/
+            --bs-btn-hover-bg: #6f8ac3;
+            --bs-btn-hover-border-color: #6f8ac3;
         }
 
         /* Inpa Button Style */
@@ -404,6 +553,10 @@
             background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
             /*box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);*/
             /*box-shadow: 0 4px 15px 0 rgba(124, 124, 124, 0.75);*/
+        }
+
+        .alert {
+            --bs-alert-margin-bottom: 0;
         }
     </style>
 </head>
@@ -600,6 +753,7 @@
         </div>
         <div class="order-area">
             <button class="order-btn btn btn-primary">주문하기</button>
+            <div class="modal-dialog modal-xl">...</div>
         </div>
     </div>
 
@@ -613,150 +767,53 @@
 <!-- Start AI Chat : Hidden <div> -->
 <div id="ai-chat-div" style="display: none;">
     <div class="ai-side-after">
-        <div class="messages">
+        <div class="messages-area">
             <div class="message">
-                <div class="message__outer">
-                    <div class="message__avatar"></div>
-                    <div class="message__inner">
-                        <div class="message__bubble">
-                            bubble!
-                        </div>
-                        <div class="message__actions"></div>
-                        <div class="message__spacer"></div>
-                    </div>
-                    <div class="message__status"></div>
+                <p class="from-ai margin-t_one" style="margin-top: 10px">
+                    안녕하세요 무엇을 도와드릴까요?
+                    하단의 질문하기 버튼을 누르고 말씀해주세요.
+                    빨간 정지 버튼을 누르면 음성 인식이 중지됩니다.
+                </p>
+            </div>
+        </div>
+        <div class="ai-side-footer">
+            <div class="ai-mic">
+                <div class="buttons">
+                    <button id="startButton-ai" class="btn-hover color-3">질문하기</button>
+                    <img class="ai-mic-logo" src="/kiosk/img/whitemic_logo_vector.png" alt="mic-logo">
+                </div>
+
+            </div>
+
+            <div class="admin-mic">
+                <div class="buttons">
+                    <button id="startButton-admin" class="btn-hover color-10">직원 연결</button>
+                    <img class="admin-mic-logo" src="/kiosk/img/agent_logo_vector.png" alt="agent-logo">
                 </div>
             </div>
-        </div>
 
-        <div class="ai-mic">
-            <div class="buttons">
-                <button id="startButton-ai" class="btn-hover color-3">질문하기</button>
-                <img class="ai-mic-logo" src="/kiosk/img/whitemic_logo_vector.png" alt="mic-logo">
-                <div id="status">대기 중...</div>
-            </div>
+            <div class="stop-and-send">
+                <label for="status-and-text"></label>
+                <textarea id="status-and-text" class="alert alert-secondary"
+                          placeholder="녹음된 내용이 표시됩니다." rows="3" required></textarea>
 
-            <button id="stopButton" disabled>녹음 정지</button>
-        </div>
-
-        <div class="admin-mic">
-            <div class="buttons">
-                <button id="startButton-admin" class="btn-hover color-10">직원 연결</button>
-                <img class="admin-mic-logo" src="/kiosk/img/agent_logo_vector.png" alt="agent-logo">
+                <button id="stopButton" class="btn btn-danger" type="button" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stop-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5z"/>
+                    </svg>
+                </button>
+                <button id="sendButton" class="btn btn-primary" type="button" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    // Touch to Start AI Chat
-    document.getElementById('ai-start-btn').addEventListener('click', function() {
-        let button = document.getElementById('ai-start-btn');
-        let newContent = document.getElementById('ai-chat-div').innerHTML;
-
-        // New <div> 생성
-        let tempDiv = document.createElement('div');
-        tempDiv.innerHTML = newContent;
-
-        // tempDiv의 자식 노드를 가져와서 새로운 <div>로 생성
-        let newDiv = tempDiv.firstElementChild;
-
-        // Button을 새로운 <div>로 교체
-        button.parentNode.replaceChild(newDiv, button);
-    });
-
-    // Record
-    let mediaRecorder;
-    let audioChunks = [];
-    const startButton = document.getElementById('startButton-ai');
-    const stopButton = document.getElementById('stopButton');
-    const statusDisplay = document.getElementById('status');
-
-    startButton.addEventListener('click', () => {
-        startRecording();
-        startButton.disabled = true;
-        stopButton.disabled = false;
-        statusDisplay.textContent = 'Recording...';
-    });
-
-    stopButton.addEventListener('click', () => {
-        stopRecording();
-        startButton.disabled = false;
-        stopButton.disabled = true;
-        statusDisplay.textContent = '녹음 파일 업로드 중...';
-    });
-
-    function startRecording() {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.start();
-
-                mediaRecorder.ondataavailable = event => {
-                    audioChunks.push(event.data);
-                };
-
-                mediaRecorder.onstop = () => {
-                    const audioBlob = new Blob(audioChunks, {type:'audio/webm'});
-                    audioChunks = [];
-
-                    // Transmit Audio File to Server
-                    const formData = new FormData();
-                    formData.append('audioFile', audioBlob, 'recording.webm');
-
-                    fetch('/upload-audio', {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(response => response.text())
-                        .then(data => {
-                            console.log('Server Response: ', data);
-                            statusDisplay.textContent = '녹음 파일 업로드 완료 및 업로드 성공';
-                    })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            statusDisplay.textContent = '업로드 중 오류 발생';
-                    });
-                };
-            })
-            .catch(error => {
-                console.error('Mic Access Error:', error);
-                statusDisplay.textContent = '마이크 엑세스 거부됨';
-            });
-    }
-
-    function stopRecording() {
-        mediaRecorder.stop();
-    }
-
-<!--    function openPopup() {-->
-<!--        document.getElementById('popup').style.display = 'flex';-->
-<!--    }-->
-
-<!--    document.getElementById('close-btn').addEventListener('click', function() {-->
-<!--        document.getElementById('popup').style.display = 'none';-->
-<!--    });-->
-
-<!--    let quantity = 3;-->
-<!--    function increaseQuantity() {-->
-<!--        quantity++;-->
-<!--        document.getElementById("quantity").textContent = quantity;-->
-<!--    }-->
-<!--    function decreaseQuantity() {-->
-<!--        if (quantity > 1) {-->
-<!--            quantity&#45;&#45;;-->
-<!--            document.getElementById("quantity").textContent = quantity;-->
-<!--        }-->
-<!--    }-->
-
-<!--    function openPopupOrder() {-->
-<!--        document.getElementById('popup-order-confirmation').style.display = 'flex';-->
-<!--    }-->
-
-<!--    document.getElementById('close-button').addEventListener('click', function() {-->
-<!--        document.getElementById('popup-order-confirmation').style.display = 'none';-->
-<!--    });-->
-</script>
+<script src="/kiosk/js/aiChat.js"></script>
+<script src="/kiosk/js/productDetailModal.js"></script>
 
 </body>
 </html>

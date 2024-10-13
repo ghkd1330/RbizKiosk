@@ -3,6 +3,7 @@ package taco.rbiz.web.controller.util;
 import com.ghgande.j2mod.modbus.facade.ModbusTCPMaster;
 import com.ghgande.j2mod.modbus.procimg.InputRegister;
 import com.ghgande.j2mod.modbus.procimg.SimpleRegister;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ModbusController {
 
-    private static final String MASTER_IP = "192.168.137.102"; // Master IP
+    @Value("${master.ip}")
+    private String MASTER_IP; // Master IP
     private static final int MASTER_PORT = 502; // Modbus TCP 기본 포트
     private static final int SLAVE_ID = 255; // Slave ID
 //    private static final int ADDRESS = 1; // 고정된 Holding Register 주소

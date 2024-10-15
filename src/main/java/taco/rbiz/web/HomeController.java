@@ -23,4 +23,9 @@ public class HomeController {
     public String goModbus() {
         return "index";
     }
+
+    @GetMapping("/test")
+    public String goTest() {
+        return "uiTest";
+    }
 }

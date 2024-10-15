@@ -1,3 +1,15 @@
+
+document.addEventListener("DOMContentLoaded", function() {
+    const orderModal = document.getElementById('orderModal');
+    orderModal.addEventListener('hidden.bs.modal', function () {
+        const checkboxes = orderModal.querySelectorAll('.block-checkbox');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+            updateBorder(checkbox);
+        });
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     const modalCheckbox = document.getElementById("modal-detail");
     const bSetCard = document.getElementById("b-set");

@@ -473,7 +473,30 @@
                         </div>
                         <div>
                             <button type="button" class="btn btn-secondary modal-btn-order close-btn-order" data-bs-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-primary modal-btn-order confirm-btn-order">결제</button>
+                            <button type="button" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
+                                    class="btn btn-primary modal-btn-order confirm-btn-order">결제</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Modal -->
+        <div class="modal fade" id="staticBackdrop" aria-hidden="true" aria-labelledby="staticBackdropLabel"
+             tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="display: flex; justify-content: center">
+                        <div class="spinner-border text-primary" role="status" style="margin-right: 15px;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                            승인 대기 중...
+                        </h1>
+                    </div>
+                    <div class="modal-body" style="display: flex; justify-content: center; overflow: hidden;">
+                        <div style="width: 300px; height: 300px; display: flex; justify-content: center; flex-direction: column;">
+                            <img src="/kiosk/img/qrmodal/qrcode.png" alt="QRImage" style="object-fit: cover; max-width: inherit; max-height: inherit; height: inherit; width: inherit;">
                         </div>
                     </div>
                 </div>

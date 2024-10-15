@@ -171,4 +171,38 @@ document.querySelectorAll('.modal-row-salad .block-checkbox').forEach((checkbox)
     checkbox.addEventListener('change', () => updateBorder(checkbox));
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    // QR Modal이 열릴 때 이벤트 감지
+    const qrModal = document.getElementById('staticBackdrop');
 
+    qrModal.addEventListener('shown.bs.modal', function () {
+        // 3초 후에 modal-body의 내용 변경
+        setTimeout(function() {
+            // modal-header 내용 변경
+            const modalHeader = qrModal.querySelector('.modal-header');
+            modalHeader.innerHTML = `
+                <h1 class="modal-title fs-5">결제 완료!</h1>
+            `;
+
+            // modal-body 내용 변경
+            const modalBody = qrModal.querySelector('.modal-body');
+            modalBody.innerHTML = `
+                <div style="flex-direction: column; justify-content: center; align-items: center; text-align: center; font-size: 22px;">
+                    <p>잠시 후 홈으로 이동합니다.</p>
+                    <div style="width: 100px; height: 100px; margin-left: 65px; margin-bottom: 70px;">
+                        <img src="/kiosk/img/qrmodal/done.png" alt="DoneImage" style="object-fit: cover; max-width: inherit; max-height: inherit; height: inherit; width: inherit;">
+                    </div>
+                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%;"></div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                </div>
+            `;
+        }, 5000);
+
+        // 추가 3초 후에 홈 화면으로 이동
+        setTimeout(function() {
+            window.location.href = '/'; // 홈 화면의 URL로 변경하세요.
+        }, 8000);
+    });
+});

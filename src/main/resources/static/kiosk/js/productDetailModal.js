@@ -111,6 +111,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         });
+
+        // 모달이 닫힐 때 체크박스 모두 해제
+        if (!modalCheckbox.checked) {
+            // 모든 체크박스 해제 및 테두리 제거
+            const allCheckboxes = document.querySelectorAll('.modal-content-detail .block-checkbox');
+            allCheckboxes.forEach((checkbox) => {
+                checkbox.checked = false;
+                updateBorder(checkbox);
+            });
+        }
     });
 
     // 모달 내부 클릭 시 이벤트 전파 중지
@@ -131,6 +141,7 @@ const grillingOptions = document.querySelectorAll('.modal-row-done .block-checkb
 const drinkOptions = document.querySelectorAll('.modal-row-drink .block-checkbox');
 const takeoutOptions = document.querySelectorAll('.modal-takeout .block-checkbox');
 const payOptions = document.querySelectorAll('.modal-pay .block-checkbox');
+const receiptOptions = document.querySelectorAll('.modal-receipt .block-checkbox');
 
 // 하나만 선택 가능하도록 하는 함수
 function singleSelect(checkboxes) {
@@ -165,6 +176,7 @@ singleSelect(grillingOptions);
 singleSelect(drinkOptions);
 singleSelect(takeoutOptions);
 singleSelect(payOptions);
+singleSelect(receiptOptions);
 
 // 야채 옵션은 다중 선택 가능하므로 별도의 처리 필요 없음
 document.querySelectorAll('.modal-row-salad .block-checkbox').forEach((checkbox) => {

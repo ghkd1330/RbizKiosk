@@ -1,11 +1,102 @@
 document.addEventListener("DOMContentLoaded", function() {
     const modalCheckbox = document.getElementById("modal-detail");
-    const card = document.getElementById("b-set");
+    const bSetCard = document.getElementById("b-set");
+    const sSetCard = document.getElementById("s-set");
+    const bSingleCard = document.getElementById("b-single");
+    const sSingleCard = document.getElementById("s-single");
+    const modalRowDone = document.querySelector(".modal-row-done");
+    const modalRowSalad = document.querySelector(".modal-row-salad");
+    const modalRowDrink = document.querySelector(".modal-row-drink");
     const areasToDim = ["left-side", "item-list-main", "cart-footer", "order-footer"];
 
-    // 카드 클릭 시 모달 열기
-    card.addEventListener("click", function() {
+    // 모달 내용 업데이트를 위한 요소들
+    const modalHeader = document.querySelector('.modal-content-detail header p');
+    const modalImage = document.querySelector('.modal-info-detail .image-wrapper img');
+    const modalDescription = document.getElementById('detail-explain');
+    const modalPrice = document.getElementById('detail-price');
+
+    // 메뉴 데이터 객체
+    const menuData = {
+        "b-set": {
+            name: "소고기 타코 세트",
+            image: "/kiosk/img/mainitemlist/beef_set.png",
+            description: "신선한 소고기와 다채로운 야채가 어우러진 풍성한 타코 세트. 음료 선택 포함.",
+            price: "가격 : 12,000원"
+        },
+        "s-set": {
+            name: "소시지 타코 세트",
+            image: "/kiosk/img/mainitemlist/sausage_set.png",
+            description: "육즙 가득한 소시지와 신선한 채소로 가득한 타코 세트. 음료 선택 포함.",
+            price: "가격 : 10,000원"
+        },
+        "b-single": {
+            name: "소고기 타코 단품",
+            image: "/kiosk/img/mainitemlist/beef_single.png",
+            description: "고소한 소고기와 풍부한 향신료가 조화로운 단품 타코. 신선한 야채가 곁들여짐.",
+            price: "가격 : 10,000원"
+        },
+        "s-single": {
+            name: "소시지 타코 단품",
+            image: "/kiosk/img/mainitemlist/sausage_single.png",
+            description: "깊은 풍미의 소시지와 신선한 채소가 어우러진 단품 타코. 한 입 가득 육즙이 느껴짐.",
+            price: "가격 : 8,000원"
+        }
+    };
+
+    // 모달 열기 함수
+    function openModal(cardType) {
+        // 모든 옵션 섹션 초기화
+        modalRowDone.style.display = "";
+        modalRowSalad.style.display = "";
+        modalRowDrink.style.display = "";
+        modalRowSalad.style.gridArea = "";
+        modalRowDrink.style.gridArea = "";
+
+        // 카드 타입에 따라 옵션 섹션 숨기기 및 grid-area 조정
+        if (cardType === "s-set") {
+            modalRowDone.style.display = "none";
+
+            // grid-area 조정
+            modalRowSalad.style.gridArea = "1 / 2 / 2 / 3";
+            modalRowDrink.style.gridArea = "2 / 2 / 3 / 3";
+        } else if (cardType === "b-single") {
+            modalRowDrink.style.display = "none";
+        } else if (cardType === "s-single") {
+            modalRowDone.style.display = "none";
+            modalRowDrink.style.display = "none";
+
+            // grid-area 조정
+            modalRowSalad.style.gridArea = "1 / 2 / 2 / 3";
+        }
+
+        // 모달 내용 업데이트
+        const data = menuData[cardType];
+        if (data) {
+            modalHeader.textContent = data.name;
+            modalImage.src = data.image;
+            modalDescription.textContent = data.description;
+            modalPrice.textContent = data.price;
+        }
+
+        // 모달 열기
         modalCheckbox.checked = true;
+    }
+
+    // 카드 클릭 이벤트 리스너 추가
+    bSetCard.addEventListener("click", function() {
+        openModal("b-set");
+    });
+
+    sSetCard.addEventListener("click", function() {
+        openModal("s-set");
+    });
+
+    bSingleCard.addEventListener("click", function() {
+        openModal("b-single");
+    });
+
+    sSingleCard.addEventListener("click", function() {
+        openModal("s-single");
     });
 
     // 모달 열릴 때 dimmed 클래스 추가 및 제거
@@ -32,21 +123,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const modalBg = document.querySelector('.modal-bg-detail');
     modalBg.addEventListener('click', function() {
         modalCheckbox.checked = false;
-    });
-});
-
-// 모든 체크박스를 선택하고, 이벤트 리스너 추가
-document.querySelectorAll('.block-checkbox').forEach((checkbox) => {
-    checkbox.addEventListener('change', (event) => {
-        // 체크박스의 부모 .block 요소를 선택
-        const blockDiv = event.target.closest('.block');
-
-        // 체크 상태에 따라 클래스 추가/제거
-        if (event.target.checked) {
-            blockDiv.classList.add('checked-border');
-        } else {
-            blockDiv.classList.remove('checked-border');
-        }
     });
 });
 

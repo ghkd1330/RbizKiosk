@@ -8,8 +8,6 @@
     background-color: #ffecd1;
     grid-template-columns: 3.8fr 6.1fr 3.8fr;
     grid-template-rows: 2.6fr 3.8fr 2.3fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
 }
 
 /* 상단 우측 버튼들 */
@@ -57,11 +55,6 @@
     text-align: center;
 }
 
-/* 중앙 이미지 */
-.welcome-text-container {
-    /*position: relative;*/
-}
-
 #welcome-image {
     position: absolute;
     top: 17vh;
@@ -89,11 +82,11 @@
     letter-spacing: 0.02em;
     text-align: center;
     color: #4e944e;
-    text-shadow: 5px 5px 0px #ffd700,
-    10px 10px 0px #ff6347,
-    15px 15px 0px #8b4513,
-    20px 20px 0px #fffff0,
-    25px 25px 0px #f5deb3
+    text-shadow: 5px 5px 0 #ffd700,
+    10px 10px 0 #ff6347,
+    15px 15px 0 #8b4513,
+    20px 20px 0 #fffff0,
+    25px 25px 0 #f5deb3
 }
 
 /* 하단 버튼 */

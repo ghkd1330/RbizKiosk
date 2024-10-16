@@ -11,6 +11,8 @@
     <!-- Custom CSS -->
     <link th:href="@{/kiosk/css/home.css}"
           href="../kiosk/css/home.css" rel="stylesheet">
+    <link th:href="@{/kiosk/css/homeLangModal.css}"
+          href="../kiosk/css/homeLangModal.css" rel="stylesheet">
 </head>
 <body>
     <!-- 전체 화면 컨테이너 -->
@@ -26,7 +28,8 @@
                     어드민
                 </span>
             </button>
-            <button id="settings-btn" type="button" class="btn btn-primary col-6" style="border-right-width: 0">
+            <button id="settings-btn" type="button" class="btn btn-primary col-6"
+                    data-bs-toggle="modal" data-bs-target="#langModal" style="border-right-width: 0">
                 <span class="btn-icon">
                     <img src="https://img.icons8.com/color/24/000000/google-translate.png" alt="settings-icon"
                          style="object-fit: cover; width: 3vw; height: 3vw">
@@ -35,6 +38,110 @@
                     <span>언어 설정</span>
                 </span>
             </button>
+        </div>
+
+        <!-- Language Modal -->
+        <div class="modal fade" id="langModal" tabindex="-1" aria-labelledby="langModalLabel" aria-hidden="true">
+            <div class="modal-dialog order-dialog">
+                <div class="modal-content modal-content-order">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="langModalLabel">언어 설정</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="lang-block kor-block">
+                            <input type="radio" id="kor" name="radio" value="1">
+                            <label for="kor">
+                                <img src="/kiosk/img/langmodal/kor_flag.png" alt="kor-img">
+                            </label>
+                            <p>한국어</p>
+                        </div>
+                        <div class="lang-block us-block">
+                            <input type="radio" id="us" name="radio" value="2">
+                            <label for="us">
+                                <img src="/kiosk/img/langmodal/us_flag.png" alt="kor-img">
+                            </label>
+                            <p>English</p>
+                        </div>
+                        <div class="lang-block chinese-block">
+                            <input type="radio" id="chinese" name="radio"  value="3">
+                            <label for="chinese">
+                                <img src="/kiosk/img/langmodal/chinese_flag.png" alt="kor-img">
+                            </label>
+                            <p>中国人</p>
+                        </div>
+                        <div class="lang-block japan-block">
+                            <input type="radio" id="japan" name="radio"  value="4">
+                            <label for="japan">
+                                <img src="/kiosk/img/langmodal/japan_flag.png" alt="kor-img">
+                            </label>
+                            <p>日本語</p>
+                        </div>
+                        <div class="lang-block india-block">
+                            <input type="radio" id="india" name="radio"  value="5">
+                            <label for="india">
+                                <img src="/kiosk/img/langmodal/india_flag.png" alt="kor-img">
+                            </label>
+                            <p>हिन्दी</p>
+                        </div>
+                        <div class="lang-block spain-block">
+                            <input type="radio" id="spain" name="radio"  value="6">
+                            <label for="spain">
+                                <img src="/kiosk/img/langmodal/spain_flag.png" alt="kor-img">
+                            </label>
+                            <p>español</p>
+                        </div>
+                        <div class="lang-block algeria-block">
+                            <input type="radio" id="algeria" name="radio"  value="7">
+                            <label for="algeria">
+                                <img src="/kiosk/img/langmodal/algeria_flag.png" alt="kor-img">
+                            </label>
+                            <p>عربي</p>
+                        </div>
+                        <div class="lang-block bangladesh-block">
+                            <input type="radio" id="bangladesh" name="radio"  value="8">
+                            <label for="bangladesh">
+                                <img src="/kiosk/img/langmodal/bangladesh_flag.png" alt="kor-img">
+                            </label>
+                            <p>বাংলা</p>
+                        </div>
+                        <div class="lang-block brazil-block">
+                            <input type="radio" id="brazil" name="radio"  value="9">
+                            <label for="brazil">
+                                <img src="/kiosk/img/langmodal/brazil_flag.png" alt="kor-img">
+                            </label>
+                            <p>Português</p>
+                        </div>
+                        <div class="lang-block russia-block">
+                            <input type="radio" id="russia" name="radio"  value="10">
+                            <label for="russia">
+                                <img src="/kiosk/img/langmodal/russia_flag.png" alt="kor-img">
+                            </label>
+                            <p>русский</p>
+                        </div>
+                        <div class="lang-block franch-block">
+                            <input type="radio" id="franch" name="radio"  value="11">
+                            <label for="franch">
+                                <img src="/kiosk/img/langmodal/franch_flag.png" alt="kor-img">
+                            </label>
+                            <p>Français</p>
+                        </div>
+                        <div class="lang-block pakistan-block">
+                            <input type="radio" id="pakistan" name="radio"  value="12">
+                            <label for="pakistan">
+                                <img src="/kiosk/img/langmodal/pakistan_flag.png" alt="kor-img">
+                            </label>
+                            <p>اردو</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="margin-bottom: 10px;">
+                            <button type="button" class="btn btn-secondary modal-btn-order close-btn-order" data-bs-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-primary modal-btn-order confirm-btn-order">완료</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- 중앙 이미지 + 중앙 글씨 -->
@@ -59,6 +166,14 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Language Modal -->
+<script src="/kiosk/js/homeLangModal.js"></script>
+
 </body>
 </html>

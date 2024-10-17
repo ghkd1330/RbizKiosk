@@ -1,5 +1,6 @@
 package taco.rbiz.domain.model;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 /**
@@ -8,15 +9,15 @@ import lombok.Data;
 @Data
 public class Admin {
 
-    private String username;
+    private Long id; // ID for DB
+
+    @NotEmpty
+    private String loginId;
+    @NotEmpty
     private String password;
 
-    public Admin() {
-
-    }
-
-    public Admin(String username, String password) {
-        this.username = username;
+    public Admin(String loginId, String password) {
+        this.loginId = loginId;
         this.password = password;
     }
 }

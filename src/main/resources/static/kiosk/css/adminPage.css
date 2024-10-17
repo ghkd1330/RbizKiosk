@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 전체 화면 컨테이너 */
+.main-contain {
+    display: grid;
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 740px;
+    background-color: #252525;
+}

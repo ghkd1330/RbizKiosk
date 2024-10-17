@@ -14,7 +14,7 @@
     width: 40px;
 }
 
-.modal-body {
+.order-dialog .modal-body {
     padding-left: 30px;
     padding-right: 30px;
 
@@ -27,7 +27,7 @@
 .modal-body input[type="radio"] {
     display: none;
 }
-.modal-body label {
+.order-dialog .modal-body label {
     display: inline-block;
     cursor: pointer;
     border: 5px solid #dcdcdc;
@@ -35,7 +35,7 @@
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.15);
     transition: border-color 0.3s;
 }
-.modal-body input[type="radio"]:checked + label {
+.order-dialog .modal-body input[type="radio"]:checked + label {
     border-color: pink;
 }
 .modal-body img {
@@ -59,7 +59,7 @@
     width: 1057px;
     height: 666px;
 }
-.modal-content {
+.modal-dialog .modal-content {
     height: 100%;
 }
 

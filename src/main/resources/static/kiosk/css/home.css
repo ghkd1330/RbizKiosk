@@ -90,12 +90,20 @@
 }
 
 /* 하단 버튼 */
+.main-btn > form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
 .main-btn {
     grid-area: 3 / 2 / 4 / 3;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
+    align-content: center;
     flex-direction: column;
+
 }
 
 #to-main-btn {

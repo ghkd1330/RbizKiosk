@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const modalRowSalad = document.querySelector(".modal-row-salad");
     const modalRowDrink = document.querySelector(".modal-row-drink");
     const areasToDim = ["left-side", "item-list-main", "cart-footer", "order-footer"];
+    // 음료 메뉴 카드 요소 가져오기
+    const cokeCard = document.getElementById("coke");
+    const spriteCard = document.getElementById("sprite");
 
     // 모달 내용 업데이트를 위한 요소들
     const modalHeader = document.querySelector('.modal-content-detail header p');
@@ -57,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 모달 열기 함수
     function openModal(cardType) {
+
         // 모든 옵션 섹션 초기화
         modalRowDone.style.display = "";
         modalRowSalad.style.display = "";
@@ -82,12 +86,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // 모달 내용 업데이트
-        const data = menuData[cardType];
-        if (data) {
-            modalHeader.textContent = data.name;
-            modalImage.src = data.image;
-            modalDescription.textContent = data.description;
-            modalPrice.textContent = data.price;
+        const dataForView = menuData[cardType];
+        if (dataForView) {
+            modalHeader.textContent = dataForView.name;
+            modalImage.src = dataForView.image;
+            modalDescription.textContent = dataForView.description;
+            modalPrice.textContent = dataForView.price;
         }
 
         // 모달 열기
@@ -109,6 +113,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     sSingleCard.addEventListener("click", function() {
         openModal("s-single");
+    });
+
+    // 음료 메뉴 카드 클릭 이벤트 리스너 추가
+    cokeCard.addEventListener("click", function() {
+        handleDrinkClick("콜라");
+    });
+
+    spriteCard.addEventListener("click", function() {
+        handleDrinkClick("사이다");
     });
 
     // 모달 열릴 때 dimmed 클래스 추가 및 제거
@@ -195,6 +208,125 @@ document.querySelectorAll('.modal-row-salad .block-checkbox').forEach((checkbox)
     checkbox.addEventListener('change', () => updateBorder(checkbox));
 });
 
+// Detail Modal -> 추가 버튼 눌러서 자바 객체로 Server에 전송
+document.addEventListener("DOMContentLoaded", function() {
+    const addButton = document.getElementById("add-button");
+    addButton.addEventListener("click", function() {
+        collectModalData();
+    });
+});
+
+function collectModalData() {
+    // Collect product name
+    const productName = document.querySelector('.modal-content-detail header p').textContent;
+
+    // Collect product description
+    const description = document.getElementById('detail-explain').textContent;
+
+    // Collect price
+    const priceText = document.getElementById('detail-price').textContent;
+    const price = parseInt(priceText.replace(/[^0-9]/g, ''), 10);
+
+    // Collect selected options
+    const selectedOptions = {};
+
+    // Grilling options (only one can be selected)
+    const grillingOption = document.querySelector('.modal-row-done .block-checkbox:checked');
+    if (grillingOption) {
+        selectedOptions['grilling'] = grillingOption.nextElementSibling.textContent.trim();
+    }
+
+    // Salad options (multiple can be selected)
+    const saladOptions = document.querySelectorAll('.modal-row-salad .block-checkbox:checked');
+    if (saladOptions.length > 0) {
+        selectedOptions['salad'] = Array.from(saladOptions).map(cb => cb.nextElementSibling.textContent.trim());
+    }
+
+    // Drink options (only one can be selected)
+    const drinkOption = document.querySelector('.modal-row-drink .block-checkbox:checked');
+    if (drinkOption) {
+        selectedOptions['drink'] = drinkOption.nextElementSibling.textContent.trim();
+    }
+
+    const quantity = 1;
+
+    // Create an object to send to the server
+    const productData = {
+        productName: productName,
+        description: description,
+        price: price,
+        selectedOptions: selectedOptions,
+        quantity: quantity
+    };
+
+    // Send the data to the server
+    sendProductDataToServer(productData);
+}
+
+function handleDrinkClick(drinkName) {
+    // 음료 데이터 설정
+    let productData = {};
+
+    if (drinkName === "콜라") {
+        productData = {
+            productName: "콜라",
+            description: "달콤한 맛의 대표, 코카콜라.",
+            price: 2000,
+            selectedOptions: {}, // 옵션이 없으므로 빈 객체
+            quantity: 1 // 기본 수량 1
+        };
+    } else if (drinkName === "사이다") {
+        productData = {
+            productName: "사이다",
+            description: "톡 쏘는 청량감의 칠성사이다.",
+            price: 2000,
+            selectedOptions: {}, // 옵션이 없으므로 빈 객체
+            quantity: 1 // 기본 수량 1
+        };
+    }
+
+    // Send the data to the server
+    sendProductDataToServer(productData);
+}
+
+function sendProductDataToServer(productData) {
+    console.log('Sending Product Data: ', productData);
+    fetch('/addProduct', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Product added:', data);
+            // Optionally, update the UI or notify the user
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+function openOrderModalWithErrors() {
+    // 주문 모달 열기
+    const orderModalElement = document.getElementById('orderModal');
+    const orderModal = new bootstrap.Modal(orderModalElement);
+    orderModal.show();
+
+    // 미선택된 옵션 강조
+    /*[[${missingDiningOption}]]*/ highlightOptionGroup('diningOptionGroup');
+    /*[[${missingPaymentMethod}]]*/ highlightOptionGroup('paymentMethodGroup');
+}
+
+function highlightOptionGroup(groupId) {
+    const groupElement = document.getElementById(groupId);
+    groupElement.classList.add('error-highlight');
+}
+
+
+// QR Modal
 document.addEventListener("DOMContentLoaded", function() {
     // QR Modal이 열릴 때 이벤트 감지
     const qrModal = document.getElementById('staticBackdrop');
@@ -230,3 +362,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 8000);
     });
 });
+
+function showQRModal() {
+    // QR 모달 열기
+    const qrModalElement = document.getElementById('staticBackdrop');
+    const qrModal = new bootstrap.Modal(qrModalElement);
+    qrModal.show();
+}

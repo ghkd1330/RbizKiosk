@@ -72,9 +72,11 @@
             <label for="modal-detail" class="close">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </label>
+
+            <input type="hidden" name="productId" />
             <header>
                 <p>메뉴 이름</p>
-                <button class="modal-close-btn">
+                <button class="modal-close-btn" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
                     </svg>
@@ -163,7 +165,7 @@
 
             <footer>
                 <label for="modal-detail" class="button danger">취소</label>
-                <label for="modal-detail" class="button success">추가</label>
+                <label for="modal-detail" class="button success" id="add-button">추가</label>
             </footer>
         </div>
 
@@ -230,96 +232,41 @@
     </div>
 
     <div class="cart-footer">
-        <div id="preview-cart-item1" class="preview-cart-items">
-            <button class="delete-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                </svg>
-            </button>
-            <div class="item-name-price">
-                <div class="preview-item-name">소고기 타코 세트</div>
-                <div class="preview-item-price">12,000원</div>
+        <div id="cart-items-container">
+            <div th:if="${cart == null or #lists.isEmpty(cart.items)}">
+                <p style="text-align: center; font-size: 24px; color: white; padding-top: 25%;">장바구니가 비어 있습니다.</p>
             </div>
-            <div class="item-quantity-ctrl">
-                <button type="button" class="plus-btn btn btn-danger">+</button>
-                <span class="item-quantity">2</span>
-                <button type="button" class="minus-btn btn btn-danger">-</button>
-            </div>
-        </div>
-        <div id="preview-cart-item2" class="preview-cart-items">
-            <button class="delete-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                </svg>
-            </button>
-            <div class="item-name-price">
-                <div class="preview-item-name">소시지 타코 세트</div>
-                <div class="preview-item-price">10,000원</div>
-            </div>
-            <div class="item-quantity-ctrl">
-                <button type="button" class="plus-btn btn btn-danger">+</button>
-                <span class="item-quantity">1</span>
-                <button type="button" class="minus-btn btn btn-danger">-</button>
-            </div>
-        </div>
-        <div id="preview-cart-item3" class="preview-cart-items">
-            <button class="delete-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                </svg>
-            </button>
-            <div class="item-name-price">
-                <div class="preview-item-name">소시지 타코 단품</div>
-                <div class="preview-item-price">8,000원</div>
-            </div>
-            <div class="item-quantity-ctrl">
-                <button type="button" class="plus-btn btn btn-danger">+</button>
-                <span class="item-quantity">5</span>
-                <button type="button" class="minus-btn btn btn-danger">-</button>
-            </div>
-        </div>
-        <div id="preview-cart-item4" class="preview-cart-items">
-            <button class="delete-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                </svg>
-            </button>
-            <div class="item-name-price">
-                <div class="preview-item-name">콜라</div>
-                <div class="preview-item-price">2,000원</div>
-            </div>
-            <div class="item-quantity-ctrl">
-                <button type="button" class="plus-btn btn btn-danger">+</button>
-                <span class="item-quantity">1</span>
-                <button type="button" class="minus-btn btn btn-danger">-</button>
-            </div>
-        </div>
-        <div id="preview-cart-item5" class="preview-cart-items">
-            <button class="delete-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                </svg>
-            </button>
-            <div class="item-name-price">
-                <div class="preview-item-name">사이다</div>
-                <div class="preview-item-price">2,000원</div>
-            </div>
-            <div class="item-quantity-ctrl">
-                <button type="button" class="plus-btn btn btn-danger">+</button>
-                <span class="item-quantity">2</span>
-                <button type="button" class="minus-btn btn btn-danger">-</button>
+            <div th:unless="${cart == null or #lists.isEmpty(cart.items)}">
+                <div th:each="product : ${cart.items}">
+                    <div class="preview-cart-items">
+                        <button class="delete-btn" th:data-product-id="${product.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                            </svg>
+                        </button>
+                        <div class="item-name-price">
+                            <div class="preview-item-name" th:text="${product.productName}"></div>
+                            <div class="preview-item-price" th:text="${product.price + '원'}"></div>
+                        </div>
+                        <div class="item-quantity-ctrl">
+                            <button type="button" class="plus-btn btn btn-danger" th:data-product-id="${product.id}">+</button>
+                            <span class="item-quantity" th:data-product-id="${product.id}" th:text="${product.quantity}"></span>
+                            <button type="button" class="minus-btn btn btn-danger" th:data-product-id="${product.id}">-</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="order-footer">
+    <div id="cart-summary" class="order-footer">
         <div class="total-price">
             <span class="total-price-text">총 가격</span>
-            <span class="total-price-result">80,000원</span>
+            <span id="total-price-result" class="total-price-result" th:text="${totalPrice} + '원'"></span>
         </div>
         <div class="total-quantity">
             <span class="total-quantity-text">총 수량</span>
-            <span class="total-quantity-result">11개</span>
+            <span id="total-quantity-result" class="total-quantity-result" th:text="${totalQuantity}"></span>
         </div>
         <div class="order-area">
             <button class="order-btn btn btn-primary" id="order-btn" type="button"
@@ -331,150 +278,103 @@
         <!-- Order Modal -->
         <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
             <div class="modal-dialog order-dialog">
-                <div class="modal-content modal-content-order">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="orderModalLabel">장바구니</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal-order-list">
-                            <ul class="list-group">
-                                <li class="list-group-item list-title" style="background-color: #d2dfee">주문 목록</li>
-                                <li class="list-group-item list-row">
-                                    <div class="order-list-name">
-                                        <span>소고기 타코 세트</span>
-                                    </div>
-                                    <div class="order-list-quantity">
-                                        <span class="list-row-quantity">2개</span>
-                                    </div>
-                                    <div class="order-list-options">
-                                        <span>레어(40%)</span>
-                                        <span>양상추 적게</span>
-                                        <span>올리브 적게</span>
-                                        <span>사이다</span>
-                                    </div>
-                                    <div class="order-list-price">
-                                        <span>24,000원</span>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item list-row">
-                                    <div class="order-list-name">
-                                        <span>소고기 타코 세트</span>
-                                    </div>
-                                    <div class="order-list-quantity">
-                                        <span class="list-row-quantity">1개</span>
-                                    </div>
-                                    <div class="order-list-options">
-                                        <span>웰던(100%)</span>
-                                        <span>콘 적게</span>
-                                        <span>콜라</span>
-                                    </div>
-                                    <div class="order-list-price">
-                                        <span>12,000원</span>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item list-row">
-                                    <div class="order-list-name">
-                                        <span>소시지 타코 세트</span>
-                                    </div>
-                                    <div class="order-list-quantity">
-                                        <span class="list-row-quantity">2개</span>
-                                    </div>
-                                    <div class="order-list-options">
-                                        <span>양상추 적게</span>
-                                        <span>콜라</span>
-                                    </div>
-                                    <div class="order-list-price">
-                                        <span>20,000원</span>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item list-row">
-                                    <div class="order-list-name">
-                                        <span>소고기 타코</span>
-                                    </div>
-                                    <div class="order-list-quantity">
-                                        <span class="list-row-quantity">1개</span>
-                                    </div>
-                                    <div class="order-list-options">
-                                        <span>양상추 적게</span>
-                                    </div>
-                                    <div class="order-list-price">
-                                        <span>8,000원</span>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item list-row">
-                                    <div class="order-list-name">
-                                        <span>콜라</span>
-                                    </div>
-                                    <div class="order-list-quantity">
-                                        <span class="list-row-quantity">3개</span>
-                                    </div>
-                                    <div class="order-list-options">
-                                        <span>-</span>
-                                    </div>
-                                    <div class="order-list-price">
-                                        <span>6,000원</span>
-                                    </div>
-                                </li>
-                            </ul>
+                <form th:action="@{/order/submit}" method="post" id="orderForm">
+                    <div class="modal-content modal-content-order">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="orderModalLabel">장바구니</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
+                            <div class="modal-order-list">
+                                <ul class="list-group">
+                                    <li class="list-group-item list-title" style="background-color: #d2dfee">주문 목록</li>
+                                    <!-- 장바구니 상품 목록 반복 -->
+                                    <li th:each="product, iterStat : ${cart.items}" class="list-group-item list-row">
+                                        <!-- 상품 정보를 히든 필드로 전달 -->
+                                        <input type="hidden" name="products[__${iterStat.index}__].id" th:value="${product.id}">
+                                        <input type="hidden" name="products[__${iterStat.index}__].productName" th:value="${product.productName}">
+                                        <input type="hidden" name="products[__${iterStat.index}__].price" th:value="${product.price}">
+                                        <input type="hidden" name="products[__${iterStat.index}__].quantity" th:value="${product.quantity}">
+                                        <!-- 옵션은 필요에 따라 추가 구현 -->
+                                        <div class="order-list-name">
+                                            <span th:text="${product.productName}">상품명</span>
+                                        </div>
+                                        <div class="order-list-quantity">
+                                            <span class="list-row-quantity" th:text="${product.quantity + '개'}">수량</span>
+                                        </div>
+<!--                                        <div class="order-list-options">-->
+<!--                                            <span th:each="key : ${product.options.keySet()}"-->
+<!--                                                  th:text="${key} + ' : ' + ${product.options[key]}">옵션</span>-->
+<!--                                        </div>-->
+                                        <div class="order-list-options">
+                                            <span th:each="entry : ${product.options.entrySet()}">
+<!--                                                <span th:text="${entry.key} + ' : '"></span>-->
+                                                <span th:if="${entry.value instanceof T(java.util.List)}">
+                                                    <span th:each="val : ${entry.value}" th:text="${val + ' '}"></span>
+                                                </span>
+                                                <span th:unless="${entry.value instanceof T(java.util.List)}" th:text="${entry.value}"></span>
+                                            </span>
+                                        </div>
+                                        <div class="order-list-price">
+                                            <span th:text="${(product.price * product.quantity) + '원'}">가격</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
 
-                        <div class="modal-order-options">
-                            <div class="modal-takeout order-block">
-                                <div class="block takeout-block">
-                                    <input type="checkbox" id="takeout" class="block-checkbox">
-                                    <label for="takeout">
-                                        <span>포장하기</span>
-                                    </label>
+                            <div class="modal-order-options">
+                                <div class="modal-takeout order-block" id="diningOptionGroup">
+                                    <div class="block takeout-block">
+                                        <input type="radio" id="takeout" name="diningOption" value="takeout" class="block-checkbox">
+                                        <label for="takeout">
+                                            <span>포장하기</span>
+                                        </label>
+                                    </div>
+                                    <div class="block hall-block" id="paymentMethodGroup">
+                                        <input type="radio" id="hall" name="diningOption" value="hall" class="block-checkbox">
+                                        <label for="hall">
+                                            <span>매장식사</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="block hall-block">
-                                    <input type="checkbox" id="hall" class="block-checkbox">
-                                    <label for="hall">
-                                        <span>매장식사</span>
-                                    </label>
+                                <div class="modal-pay order-block">
+                                    <div class="block cash-block">
+                                        <input type="radio" id="pay-cash" name="paymentMethod" value="cash" class="block-checkbox">
+                                        <label for="pay-cash">
+                                            <span>현금 결제</span>
+                                        </label>
+                                    </div>
+                                    <div class="block credit-block">
+                                        <input type="radio" id="pay-credit" name="paymentMethod" value="credit" class="block-checkbox">
+                                        <label for="pay-credit">
+                                            <span>카드 결제</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="modal-receipt order-block">
+                                    <div class="block receipt-block">
+                                        <input type="checkbox" id="receipt" name="receipt" class="block-checkbox">
+                                        <label for="receipt">
+                                            <span>영수증 출력</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="modal-pay order-block">
-                                <div class="block cash-block">
-                                    <input type="checkbox" id="pay-cash" class="block-checkbox">
-                                    <label for="pay-cash">
-                                        <span>현금 결제</span>
-                                    </label>
-                                </div>
-                                <div class="block credit-block">
-                                    <input type="checkbox" id="pay-credit" class="block-checkbox">
-                                    <label for="pay-credit">
-                                        <span>카드 결제</span>
-                                    </label>
+                        </div>
+                        <div class="modal-footer">
+                            <div>
+                                <div class="bd-callout bd-callout-info">
+                                    <h5>총 결제 금액 : <span th:text="${totalPrice + '원'}">0원</span></h5>
                                 </div>
                             </div>
-                            <div class="modal-receipt order-block">
-                                <div class="block receipt-block">
-                                    <input type="checkbox" id="receipt" class="block-checkbox">
-                                    <label for="receipt">
-                                        <span>영수증 출력</span>
-                                    </label>
-                                </div>
+                            <div>
+                                <button type="button" class="btn btn-secondary modal-btn-order close-btn-order" data-bs-dismiss="modal">취소</button>
+                                <button type="submit" class="btn btn-primary modal-btn-order confirm-btn-order"
+                                        data-bs-target="#staticBackdrop" data-bs-toggle="modal">결제</button>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <div>
-                            <div class="bd-callout bd-callout-info">
-                                <h5>총 결제 금액 : 80,000원</h5>
-                            </div>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-secondary modal-btn-order close-btn-order" data-bs-dismiss="modal">취소</button>
-                            <button type="button" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
-                                    class="btn btn-primary modal-btn-order confirm-btn-order">결제</button>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -559,10 +459,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!--AI Chat : Recorder, AudioControl, ChatBubbleConversion, GPTWhisper, GPT4o, StartPaging-->
 <script src="/kiosk/js/aiChat.js"></script>
 <!-- Product Detail/Order Modal -->
 <script src="/kiosk/js/mainModals.js"></script>
+<!-- Cart Item Control -->
+<script src="/kiosk/js/mainFooter.js"></script>
+
+<!-- 모달 자동 열기 스크립트 추가 -->
+<script th:inline="javascript">
+    /* 모달 자동 열기 */
+    [[${orderError}]] ? openOrderModalWithErrors() : null;
+    [[${orderSuccess}]] ? showQRModal() : null;
+</script>
 
 </body>
 </html>

@@ -10,21 +10,18 @@ import java.util.Map;
 
 @Service
 public class ProductService {
-    private static final Map<Long, Product> store = new HashMap<>();
-    private static long sequence = 0L;
+    private static final Map<String, Product> store = new HashMap<>();
 
     /**
-     * 아직 미사용
-     * @param product
-     * @return
+     * @param product : ProductController(RestController)에서 받아온 상품 객체
+     * @return : Product 객체를 Return
      */
     public Product save(Product product) {
-        product.setId(++sequence);
         store.put(product.getId(), product);
         return product;
     }
 
-    public Product findById(Long id) {
+    public Product findById(String id) {
         return store.get(id);
     }
 
@@ -32,12 +29,15 @@ public class ProductService {
         return new ArrayList<>(store.values());
     }
 
-    public void update(Long productId, Product updateParam) {
+    public void update(String productId, Product updateParam) {
         Product findProduct = findById(productId);
-        findProduct.setProductName(updateParam.getProductName());
-        findProduct.setPrice(updateParam.getPrice());
-//        findProduct.setDescription(updateParam.getDescription());
-//        findProduct.setOptions(updateParam.getOptions());
+        if (findProduct != null) {
+            findProduct.setProductName(updateParam.getProductName());
+            findProduct.setPrice(updateParam.getPrice());
+            findProduct.setDescription(updateParam.getDescription());
+            findProduct.setOptions(updateParam.getOptions());
+            findProduct.setQuantity(updateParam.getQuantity());
+        }
     }
 
     public void clearStore() {

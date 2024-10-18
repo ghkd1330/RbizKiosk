@@ -1,10 +1,10 @@
 package taco.rbiz.domain.model;
 
 import lombok.Data;
-import taco.rbiz.domain.model.enums.OrderStatus;
-import taco.rbiz.domain.model.enums.PackingOption;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 주문 정보를 담는다
@@ -12,26 +12,23 @@ import java.time.LocalDateTime;
 @Data
 public class Order {
 
-    private String orderNumber;
-    private Cart cart;
-    private double totalAmount;
-    private OrderStatus status;
-    private LocalDateTime timeStamp;
-    private PackingOption packingOption;
-    private boolean receiptOption;
+    private String id; // 주문 ID, UUID로 생성
+    private List<Product> products; // 주문한 상품 목록
+    private boolean takeout; // 포장 여부, true면 포장, false면 매장식사
+    private String paymentMethod; // 결제 방법, "cash" 또는 "credit"
+    private boolean receipt; // 영수증 출력 여부
+    private LocalDateTime orderTime; // 주문 시간
 
     public Order() {
-
+        this.id = UUID.randomUUID().toString();
+        this.orderTime = LocalDateTime.now();
     }
 
-    public Order(String orderNumber, Cart cart, double totalAmount, OrderStatus status,
-                 LocalDateTime timeStamp, PackingOption packingOption, boolean receiptOption) {
-        this.orderNumber = orderNumber;
-        this.cart = cart;
-        this.totalAmount = totalAmount;
-        this.status = status;
-        this.timeStamp = timeStamp;
-        this.packingOption = packingOption;
-        this.receiptOption = receiptOption;
+    public Order(List<Product> products, boolean takeout, String paymentMethod, boolean receipt) {
+        this();
+        this.products = products;
+        this.takeout = takeout;
+        this.paymentMethod = paymentMethod;
+        this.receipt = receipt;
     }
 }

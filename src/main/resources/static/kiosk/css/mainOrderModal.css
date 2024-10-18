@@ -123,6 +123,12 @@
     height: 110px;
 }
 
+.error-highlight {
+    border: 2px solid red;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 
 
 @media (min-width: 576px) {

@@ -2,6 +2,7 @@ package taco.rbiz.domain.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,5 +11,17 @@ import java.util.List;
 @Data
 public class Cart {
 
-    private List<CartItem> items;
+    private List<Product> items = new ArrayList<>();
+
+    public void addItem(Product product) {
+        items.add(product);
+    }
+
+    public double getTotalPrice() {
+        return items.stream().mapToDouble(Product::getPrice).sum();
+    }
+
+    public int getTotalQuantity() {
+        return items.size();
+    }
 }

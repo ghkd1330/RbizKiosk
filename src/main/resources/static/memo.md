@@ -9,7 +9,7 @@
 6. 백엔드 로직 구현 (어드민 제외)
 어드민 도메인은 만들기 ㅇ
 어드민 로그인 ui -> 부트스트랩 로그인폼 찾아서 적용 ㅇ
-main에 jQuery 넣고 ajax로 모달 닫히면서 controller business Logic 실행되게끔 바꾸기? 또는 js로 전부 해결
+main에 jQuery 넣고 ajax로 모달 닫히면서 controller business Logic 실행되게끔 바꾸기? 또는 js로 전부 해결 ㅇ
 
 어드민 계정은 단 하나, 그리고 처음부터 존재 > 어드민 객체 Init ㅇ
 로그인 > 세션을 통해 인증 ㅇ

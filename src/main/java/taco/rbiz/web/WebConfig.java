@@ -1,10 +1,16 @@
 package taco.rbiz.web;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import taco.rbiz.web.controller.util.log.LogInterceptor;
 import taco.rbiz.web.login.LoginCheckInterceptor;
+
+import java.util.Locale;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -24,13 +30,21 @@ public class WebConfig implements WebMvcConfigurer {
                         "/admin/adminPage", "/admin/adminPage/**", "/admin/adminPage/*"
                 );
 
-//        registry.addInterceptor(new LoginCheckInterceptor())
-//                .order(2)
-//                .addPathPatterns("/**") // 모든 경로에 적용하되,
-//                .excludePathPatterns( // 나중에 수정
-//                        "/", "/login", "/updateLanguage", "/logout", // Home, Join, Login, Logout
-//                        "/kiosk/css/**", "/kiosk/js/**", "/kiosk/img/**", "/*.ico", "/error", "/webjars/**",
-//                        "/**/*.png", "/**/*.jpg" // Resource 조회, Error와 같은 부분은 적용하지 않는다
-//                );
+        registry.addInterceptor(localeChangeInterceptor());
     }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+        localeResolver.setDefaultLocale(Locale.KOREAN); // 기본 언어 설정
+        return localeResolver;
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+        interceptor.setParamName("lang"); // 언어 변경을 위한 파라미터명
+        return interceptor;
+    }
+
 }

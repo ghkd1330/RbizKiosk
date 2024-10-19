@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 메뉴 데이터 객체
     const menuData = {
         "b-set": {
-            name: "소고기 타코 세트",
+            name: "소고기_타코_세트",
             image: "/kiosk/img/mainitemlist/beef_set.png",
             description: "신선한 소고기와 다채로운 야채가 어우러진 풍성한 타코 세트. 음료 선택 포함.",
             price: "가격 : 12,000원"

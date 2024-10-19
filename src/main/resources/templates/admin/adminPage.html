@@ -31,13 +31,13 @@
     </div>
 
     <div id="nav-content">
-        <div id="order-status-btn" class="nav-button"><i class="fas fa-palette"></i><span>주문 현황</span></div>
-        <div id="customer-chat-btn" class="nav-button"><i class="fas fa-images"></i><span>손님과의 대화</span></div>
-        <div id="chat-history-btn" class="nav-button"><i class="fas fa-thumbtack"></i><span>대화 기록</span></div>
+        <div id="order-status-btn" class="nav-button"><i class="fas fa-palette"></i><span th:text="#{order.status}">주문 현황</span></div>
+        <div id="customer-chat-btn" class="nav-button"><i class="fas fa-images"></i><span th:text="#{customer.chat}">손님과의 대화</span></div>
+        <div id="chat-history-btn" class="nav-button"><i class="fas fa-thumbtack"></i><span th:text="#{chat.history}">대화 기록</span></div>
         <hr/>
-        <div id="product-management-btn" class="nav-button"><i class="fas fa-heart"></i><span>상품 관리</span></div>
-        <div id="statistics-btn" class="nav-button"><i class="fas fa-chart-line"></i><span>통계</span></div>
-        <div id="add-account-btn" class="nav-button"><i class="fas fa-fire"></i><span>계정 추가</span></div>
+        <div id="product-management-btn" class="nav-button"><i class="fas fa-heart"></i><span th:text="#{product.management}">상품 관리</span></div>
+        <div id="statistics-btn" class="nav-button"><i class="fas fa-chart-line"></i><span th:text="#{statistics}">통계</span></div>
+        <div id="add-account-btn" class="nav-button"><i class="fas fa-fire"></i><span th:text="#{add.account}">계정 추가</span></div>
         <hr/>
         <div id="nav-content-highlight"></div>
     </div>
@@ -53,18 +53,18 @@
 
 <div id="main-container" style="overflow-y: auto; ">
     <div class="order-info">
-        <h2>주문 현황</h2>
+        <h2 th:text="#{order.status}">주문 현황</h2>
         <!-- 주문 목록을 반복합니다 -->
         <div th:each="order : ${orders}" class="order-block">
             <!-- 첫 번째 테이블: 주문 정보 -->
             <table class="table order-table">
                 <thead>
                 <tr>
-                    <th>주문 번호</th>
-                    <th>주문 시간</th>
-                    <th>총 결제 금액</th>
-                    <th>총 상품 수량</th>
-                    <th>포장 여부</th>
+                    <th th:text="#{order.number}">주문 번호</th>
+                    <th th:text="#{order.time}">주문 시간</th>
+                    <th th:text="#{total.price}">총 결제 금액</th>
+                    <th th:text="#{total.quantity}">총 상품 수량</th>
+                    <th th:text="#{takeout}">포장 여부</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,7 +73,10 @@
                     <td th:text="${#temporals.format(order.orderTime, 'yyyy-MM-dd HH:mm')}">2023-10-18 12:34</td>
                     <td th:text="${order.totalPrice}">30000</td>
                     <td th:text="${order.totalQuantity}">3</td>
-                    <td th:text="${order.takeout ? '포장' : '매장식사'}">포장</td>
+                    <td th:switch="${order.takeout}">
+                        <span th:case="true" th:text="#{order_takeout_true}">포장</span>
+                        <span th:case="false" th:text="#{order_takeout_false}">매장식사</span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -82,14 +85,14 @@
             <table class="table product-table">
                 <thead>
                 <tr>
-                    <th>상품명</th>
-                    <th>수량</th>
-                    <th>옵션</th>
+                    <th th:text="#{product.name}">상품명</th>
+                    <th th:text="#{quantity}">수량</th>
+                    <th th:text="#{options}">옵션</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="product : ${order.products}">
-                    <td th:text="${product.productName}">소고기 타코</td>
+                    <td th:text="#{product.name}">소고기 타코</td>
                     <td th:text="${product.quantity}">2</td>
                     <td>
                         <ul>

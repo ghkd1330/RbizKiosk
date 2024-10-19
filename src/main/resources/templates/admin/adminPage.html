@@ -92,7 +92,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="product : ${order.products}">
-                    <td th:text="#{product.name}">소고기 타코</td>
+                    <td th:text="${product.productName}">소고기 타코</td>
                     <td th:text="${product.quantity}">2</td>
                     <td>
                         <ul>

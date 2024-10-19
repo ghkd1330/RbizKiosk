@@ -29,7 +29,7 @@
                     <img src="https://img.icons8.com/material-rounded/24/000000/settings.png" alt="admin-icon"
                          style="object-fit: cover; width: 3vw; height: 3vw">
                 </span>
-                <span class="btn-text">
+                <span class="btn-text" th:text="#{admin}">
                     어드민
                 </span>
             </button>
@@ -40,9 +40,42 @@
                          style="object-fit: cover; width: 3vw; height: 3vw">
                 </span>
                 <span class="btn-text">
-                    <span>언어 설정</span>
+                    <span th:text="#{language.settings}">언어 설정</span>
                 </span>
             </button>
+        </div>
+
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="loginModalLabel" th:text="#{admin.login}">Admin Login</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="home.html" th:action="@{/login}" th:object="${loginDTO}" method="post">
+                        <div class="modal-body">
+                            <!-- 검증 실패시 class에 is-invalid 추가 -->
+                            <!-- 성공 시에는 is-valid 추가 -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" th:field="*{adminId}" placeholder="">
+                                <label for="floatingInput">Admin ID</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="floatingPassword" th:field="*{password}" placeholder="">
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                    onclick="location.href='home.html'"
+                                    th:onclick="|location.href='@{/}'|"
+                                    th:text="#{close}">Close</button>
+                            <button type="submit" class="btn btn-primary" th:text="#{save.changes}">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <!-- Language Modal -->
@@ -50,7 +83,7 @@
             <div class="modal-dialog order-dialog">
                 <div class="modal-content modal-content-order">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="langModalLabel">언어 설정</h1>
+                        <h1 class="modal-title fs-5" id="langModalLabel" th:text="#{language.settings}">언어 설정</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -141,46 +174,13 @@
                     </div>
                     <div class="modal-footer">
                         <div style="margin-bottom: 10px;">
-                            <button type="button" class="btn btn-secondary modal-btn-order close-btn-order" data-bs-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-primary modal-btn-order confirm-btn-order">완료</button>
+                            <button type="button" class="btn btn-secondary modal-btn-order close-btn-order" data-bs-dismiss="modal" th:text="#{cancel}">취소</button>
+                            <button type="button" class="btn btn-primary modal-btn-order confirm-btn-order" th:text="#{confirm}">완료</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="loginModalLabel">Admin Login</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="home.html" th:action="@{/login}" th:object="${loginDTO}" method="post">
-                        <div class="modal-body">
-                            <!-- 검증 실패시 class에 is-invalid 추가 -->
-                            <!-- 성공 시에는 is-valid 추가 -->
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" th:field="*{adminId}" placeholder="">
-                                <label for="floatingInput">Admin ID</label>
-                            </div>
-                            <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword" th:field="*{password}" placeholder="">
-                                <label for="floatingPassword">Password</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                    onclick="location.href='home.html'"
-                                    th:onclick="|location.href='@{/}'|">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
 
         <!-- 중앙 이미지 + 중앙 글씨 -->
         <div class="welcome-text-container">
@@ -197,7 +197,7 @@
         <!-- 하단 버튼 -->
         <div class="main-btn">
             <form th:action="@{/cart/create}" th:method="post">
-                <button id="to-main-btn" class="btn btn-primary btn-lg col-8" type="submit">
+                <button id="to-main-btn" class="btn btn-primary btn-lg col-8" type="submit" th:text="#{order.now}">
                     주문하기
                 </button>
             </form>

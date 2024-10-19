@@ -38,13 +38,13 @@
             </button>
         </form>
         <button class="side-menu-btn set-btn btn btn-primary" type="button">
-            <span>세트</span>
+            <span th:text="#{set.menu}">세트</span>
         </button>
         <button class="side-menu-btn single-btn btn btn-primary" type="button">
-            <span>단품</span>
+            <span th:text="#{single.menu}">단품</span>
         </button>
         <button class="side-menu-btn drink-btn btn btn-primary" type="button">
-            <span>음료</span>
+            <span th:text="#{drink.menu}">음료</span>
         </button>
     </div>
 
@@ -52,18 +52,79 @@
         <!-- Set Menu -->
         <div class="title set-title">
             <hr class="title-hr-first hr-2">
-            <span class="title-text">세트</span>
+            <span class="title-text" th:text="#{set.menu}">세트</span>
             <hr class="title-hr-last hr-2">
         </div>
 
         <div id="b-set" class="menu-card card" style="width: 18rem;">
             <img src="/kiosk/img/mainitemlist/beef_set.png" class="card-img-top" alt="MenuImage">
             <div class="menu-card-texts card-body">
-                <h5 class="menu-name card-title">소고기 타코 세트</h5>
-                <p class="menu-info card-text">소고기 타코 단품 + 음료 택 1</p>
-                <p class="menu-price card-text">12,000원</p>
+                <h5 class="menu-name card-title" th:text="#{beef.taco.set}">소고기 타코 세트</h5>
+                <p class="menu-info card-text" th:text="#{beef.taco.info}">소고기 타코 단품 + 음료 택 1</p>
+                <p class="menu-price card-text" th:text="#{beef.taco.price}">12,000원</p>
             </div>
         </div>
+
+        <div id="s-set" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/mainitemlist/sausage_set.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title" th:text="#{sausage.taco.set}">소시지 타코 세트</h5>
+                <p class="menu-info card-text" th:text="#{sausage.taco.info}">소시지 타코 단품 + 음료 택 1</p>
+                <p class="menu-price card-text" th:text="#{sausage.taco.price}">10,000원</p>
+            </div>
+        </div>
+
+        <!-- Single Menu -->
+        <div class="title single-title">
+            <hr class="title-hr-first hr-2">
+            <span class="title-text" th:text="#{single.menu}">단품</span>
+            <hr class="title-hr-last hr-2">
+        </div>
+
+        <div id="b-single" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/mainitemlist/beef_single.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title" th:text="#{beef.taco.single}">소고기 타코 단품</h5>
+                <p class="menu-info card-text" th:text="#{beef.taco.single.info}">"신선한 소고기와 풍부한 향신료가 어우러진, 매력적인 멕시코식 타코입니다."</p>
+                <p class="menu-price card-text" th:text="#{beef.taco.single.price}">10,000원</p>
+            </div>
+        </div>
+
+        <div id="s-single" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/mainitemlist/sausage_single.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title" th:text="#{sausage.taco.single}">소시지 타코 단품</h5>
+                <p class="menu-info card-text" th:text="#{sausage.taco.single.info}">"육즙 가득한 소시지와 신선한 채소가 어우러진, 풍미 가득 멕시코식 타코입니다."</p>
+                <p class="menu-price card-text" th:text="#{sausage.taco.single.price}">8,000원</p>
+            </div>
+        </div>
+
+        <!-- Drink Menu -->
+        <div class="title drink-title">
+            <hr class="title-hr-first hr-2">
+            <span class="title-text" th:text="#{drink.menu}">음료</span>
+            <hr class="title-hr-last hr-2">
+        </div>
+
+        <div id="coke" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/mainitemlist/drink_coke.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title" th:text="#{coke}">콜라</h5>
+                <p class="menu-info card-text" th:text="#{coke.info}">"달콤한 맛의 대표, 코카콜라."</p>
+                <p class="menu-price card-text" th:text="#{coke.price}">2,000원</p>
+            </div>
+        </div>
+
+        <div id="sprite" class="menu-card card" style="width: 18rem;">
+            <img src="/kiosk/img/mainitemlist/drink_cider.png" class="card-img-top" alt="MenuImage">
+            <div class="menu-card-texts card-body">
+                <h5 class="menu-name card-title" th:text="#{cider}">사이다</h5>
+                <p class="menu-info card-text" th:text="#{cider.info}">"톡 쏘는 청량감의 칠성사이다."</p>
+                <p class="menu-price card-text" th:text="#{cider.price}">2,000원</p>
+            </div>
+        </div>
+
+        <div style="padding-top: 5vh"></div>
 
         <!-- Product Detail Modal -->
         <input type="checkbox" id="modal-detail" />
@@ -78,7 +139,7 @@
                 <p>메뉴 이름</p>
                 <button class="modal-close-btn" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
                     </svg>
                 </button>
             </header>
@@ -95,146 +156,85 @@
                 </div>
 
                 <div class="modal-row-done detail-block">
-                    <h4 class="option-head">굽기 옵션</h4>
+                    <h4 class="option-head" th:text="#{cooking.option}">굽기 옵션</h4>
                     <div class="block raw-block">
                         <input type="checkbox" id="rare" class="block-checkbox">
                         <label for="rare">
                             <img src="/kiosk/img/productdetail/rare_resize.png" alt="RareImage">
-                            <span>레어 (40%)</span>
+                            <span th:text="#{rare}">레어 (40%)</span>
                         </label>
                     </div>
                     <div class="block medium-block">
                         <input type="checkbox" id="medium" class="block-checkbox">
                         <label for="medium">
                             <img src="/kiosk/img/productdetail/medium_resize.png" alt="MediumImage">
-                            <span>미디움 (70%)</span>
+                            <span th:text="#{medium}">미디움 (70%)</span>
                         </label>
                     </div>
                     <div class="block well-block">
                         <input type="checkbox" id="well" class="block-checkbox">
                         <label for="well">
                             <img src="/kiosk/img/productdetail/well_resize.png" alt="WellImage">
-                            <span>웰던 (100%)</span>
+                            <span th:text="#{well.done}">웰던 (100%)</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="modal-row-salad detail-block">
-                    <h4 class="option-head">야채 옵션</h4>
+                    <h4 class="option-head" th:text="#{vegetable.option}">야채 옵션</h4>
                     <div class="block corn-block">
                         <input type="checkbox" id="corn" class="block-checkbox">
                         <label for="corn">
                             <img src="/kiosk/img/productdetail/corn_resize.png" alt="CornImage">
-                            <span>콘 적게</span>
+                            <span th:text="#{corn.less}">콘 적게</span>
                         </label>
                     </div>
                     <div class="block lettuce-block">
                         <input type="checkbox" id="lettuce" class="block-checkbox">
                         <label for="lettuce">
                             <img src="/kiosk/img/productdetail/lettuce_resize.png" alt="LettuceImage">
-                            <span>양상추 적게</span>
+                            <span th:text="#{lettuce.less}">양상추 적게</span>
                         </label>
                     </div>
                     <div class="block olive-block">
                         <input type="checkbox" id="olive" class="block-checkbox">
                         <label for="olive">
                             <img src="/kiosk/img/productdetail/olive_resize.png" alt="OliveImage">
-                            <span>올리브 적게</span>
+                            <span th:text="#{olive.less}">올리브 적게</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="modal-row-drink detail-block">
-                    <h4 class="option-head">음료 옵션</h4>
+                    <h4 class="option-head" th:text="#{drink.option}">음료 옵션</h4>
                     <div class="block coke-block">
                         <input type="checkbox" id="coke-image" class="block-checkbox">
                         <label for="coke-image">
                             <img src="/kiosk/img/productdetail/coke_resize.png" alt="CokeImage">
-                            <span>콜라</span>
+                            <span th:text="#{coke}">콜라</span>
                         </label>
                     </div>
                     <div class="block cider-block">
                         <input type="checkbox" id="cider" class="block-checkbox">
                         <label for="cider">
                             <img src="/kiosk/img/productdetail/cider_resize.png" alt="CiderImage">
-                            <span>사이다</span>
+                            <span th:text="#{cider}">사이다</span>
                         </label>
                     </div>
                 </div>
             </div>
 
             <footer>
-                <label for="modal-detail" class="button danger">취소</label>
-                <label for="modal-detail" class="button success" id="add-button">추가</label>
+                <label for="modal-detail" class="button danger" th:text="#{cancel}">취소</label>
+                <label for="modal-detail" class="button success" id="add-button" th:text="#{add}">추가</label>
             </footer>
         </div>
-
-        <div id="s-set" class="menu-card card" style="width: 18rem;">
-            <img src="/kiosk/img/mainitemlist/sausage_set.png" class="card-img-top" alt="MenuImage">
-            <div class="menu-card-texts card-body">
-                <h5 class="menu-name card-title">소시지 타코 세트</h5>
-                <p class="menu-info card-text">소시지 타코 단품 + 음료 택 1</p>
-                <p class="menu-price card-text">10,000원</p>
-            </div>
-        </div>
-
-        <!-- Single Menu -->
-        <div class="title single-title">
-            <hr class="title-hr-first hr-2">
-            <span class="title-text">단품</span>
-            <hr class="title-hr-last hr-2">
-        </div>
-
-        <div id="b-single" class="menu-card card" style="width: 18rem;">
-            <img src="/kiosk/img/mainitemlist/beef_single.png" class="card-img-top" alt="MenuImage">
-            <div class="menu-card-texts card-body">
-                <h5 class="menu-name card-title">소고기 타코 단품</h5>
-                <p class="menu-info card-text">"신선한 소고기와 풍부한 향신료가 어우러진, 매력적인 멕시코식 타코입니다."</p>
-                <p class="menu-price card-text">10,000원</p>
-            </div>
-        </div>
-
-        <div id="s-single" class="menu-card card" style="width: 18rem;">
-            <img src="/kiosk/img/mainitemlist/sausage_single.png" class="card-img-top" alt="MenuImage">
-            <div class="menu-card-texts card-body">
-                <h5 class="menu-name card-title">소시지 타코 단품</h5>
-                <p class="menu-info card-text">"육즙 가득한 소시지와 신선한 채소가 어우러진, 풍미 가득 멕시코식 타코입니다."</p>
-                <p class="menu-price card-text">8,000원</p>
-            </div>
-        </div>
-
-        <!-- Drink Menu -->
-        <div class="title drink-title">
-            <hr class="title-hr-first hr-2">
-            <span class="title-text">음료</span>
-            <hr class="title-hr-last hr-2">
-        </div>
-
-        <div id="coke" class="menu-card card" style="width: 18rem;">
-            <img src="/kiosk/img/mainitemlist/drink_coke.png" class="card-img-top" alt="MenuImage">
-            <div class="menu-card-texts card-body">
-                <h5 class="menu-name card-title">콜라</h5>
-                <p class="menu-info card-text">달콤한 맛의 대표, 코카콜라.</p>
-                <p class="menu-price card-text">2,000원</p>
-            </div>
-        </div>
-
-        <div id="sprite" class="menu-card card" style="width: 18rem;">
-            <img src="/kiosk/img/mainitemlist/drink_cider.png" class="card-img-top" alt="MenuImage">
-            <div class="menu-card-texts card-body">
-                <h5 class="menu-name card-title">사이다</h5>
-                <p class="menu-info card-text">톡 쏘는 청량감의 칠성사이다.</p>
-                <p class="menu-price card-text">2,000원</p>
-            </div>
-        </div>
-
-        <div style="padding-top: 5vh"></div>
     </div>
 
     <div class="cart-footer">
         <div id="cart-items-container">
             <div th:if="${cart == null or #lists.isEmpty(cart.items)}">
-                <p style="text-align: center; font-size: 24px; color: white; padding-top: 25%;">장바구니가 비어 있습니다.</p>
+                <p style="text-align: center; font-size: 24px; color: white; padding-top: 25%;" th:text="#{cart.empty}">장바구니가 비어 있습니다.</p>
             </div>
             <div th:unless="${cart == null or #lists.isEmpty(cart.items)}">
                 <div th:each="product : ${cart.items}">
@@ -261,16 +261,16 @@
 
     <div id="cart-summary" class="order-footer">
         <div class="total-price">
-            <span class="total-price-text">총 가격</span>
+            <span class="total-price-text" th:text="#{total.price}">총 가격</span>
             <span id="total-price-result" class="total-price-result" th:text="${totalPrice} + '원'"></span>
         </div>
         <div class="total-quantity">
-            <span class="total-quantity-text">총 수량</span>
+            <span class="total-quantity-text" th:text="#{total.quantity}">총 수량</span>
             <span id="total-quantity-result" class="total-quantity-result" th:text="${totalQuantity}"></span>
         </div>
         <div class="order-area">
             <button class="order-btn btn btn-primary" id="order-btn" type="button"
-                    data-bs-toggle="modal" data-bs-target="#orderModal">
+                    data-bs-toggle="modal" data-bs-target="#orderModal" th:text="#{order}">
                 주문하기
             </button>
         </div>
@@ -281,13 +281,13 @@
                 <form th:action="@{/order/submit}" method="post" id="orderForm">
                     <div class="modal-content modal-content-order">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="orderModalLabel">장바구니</h1>
+                            <h1 class="modal-title fs-5" id="orderModalLabel" th:text="#{cart}">장바구니</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="modal-order-list">
                                 <ul class="list-group">
-                                    <li class="list-group-item list-title" style="background-color: #d2dfee">주문 목록</li>
+                                    <li class="list-group-item list-title" style="background-color: #d2dfee" th:text="#{order.list}">주문 목록</li>
                                     <!-- 장바구니 상품 목록 반복 -->
                                     <li th:each="product, iterStat : ${cart.items}" class="list-group-item list-row">
                                         <!-- 상품 정보를 히든 필드로 전달 -->
@@ -327,13 +327,13 @@
                                     <div class="block takeout-block">
                                         <input type="radio" id="takeout" name="diningOption" value="takeout" class="block-checkbox">
                                         <label for="takeout">
-                                            <span>포장하기</span>
+                                            <span th:text="#{takeout.option}">포장하기</span>
                                         </label>
                                     </div>
                                     <div class="block hall-block" id="paymentMethodGroup">
                                         <input type="radio" id="hall" name="diningOption" value="hall" class="block-checkbox">
                                         <label for="hall">
-                                            <span>매장식사</span>
+                                            <span th:text="#{dine.in}">매장식사</span>
                                         </label>
                                     </div>
                                 </div>
@@ -341,13 +341,13 @@
                                     <div class="block cash-block">
                                         <input type="radio" id="pay-cash" name="paymentMethod" value="cash" class="block-checkbox">
                                         <label for="pay-cash">
-                                            <span>현금 결제</span>
+                                            <span th:text="#{pay.cash}">현금 결제</span>
                                         </label>
                                     </div>
                                     <div class="block credit-block">
                                         <input type="radio" id="pay-credit" name="paymentMethod" value="credit" class="block-checkbox">
                                         <label for="pay-credit">
-                                            <span>카드 결제</span>
+                                            <span th:text="#{pay.card}">카드 결제</span>
                                         </label>
                                     </div>
                                 </div>
@@ -355,7 +355,7 @@
                                     <div class="block receipt-block">
                                         <input type="checkbox" id="receipt" name="receipt" class="block-checkbox">
                                         <label for="receipt">
-                                            <span>영수증 출력</span>
+                                            <span th:text="#{print.receipt}">영수증 출력</span>
                                         </label>
                                     </div>
                                 </div>
@@ -364,13 +364,15 @@
                         <div class="modal-footer">
                             <div>
                                 <div class="bd-callout bd-callout-info">
-                                    <h5>총 결제 금액 : <span th:text="${totalPrice + '원'}">0원</span></h5>
+                                    <h5 th:text="#{total.payment.amount} + ' : ' + ${totalPrice + '원'}">총 결제 금액 : 0원</h5>
                                 </div>
                             </div>
                             <div>
-                                <button type="button" class="btn btn-secondary modal-btn-order close-btn-order" data-bs-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-secondary modal-btn-order close-btn-order"
+                                        data-bs-dismiss="modal" th:text="#{cancel}">취소</button>
                                 <button type="submit" class="btn btn-primary modal-btn-order confirm-btn-order"
-                                        data-bs-target="#staticBackdrop" data-bs-toggle="modal">결제</button>
+                                        data-bs-target="#staticBackdrop"
+                                        data-bs-toggle="modal" th:text="#{pay}">결제</button>
                             </div>
                         </div>
                     </div>
@@ -385,9 +387,9 @@
                 <div class="modal-content">
                     <div class="modal-header" style="display: flex; justify-content: center">
                         <div class="spinner-border text-primary" role="status" style="margin-right: 15px;">
-                            <span class="visually-hidden">Loading...</span>
+                            <span class="visually-hidden" th:text="#{loading}">Loading...</span>
                         </div>
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel" th:text="#{waiting.approval}">
                             승인 대기 중...
                         </h1>
                     </div>
@@ -403,8 +405,12 @@
 
     <button id="ai-start-btn" class="ai-side">
         <img class="chat-bot-logo" src="/kiosk/img/aichat/chatbot_logo_vector.png" alt="chat-bot-logo" style="padding-bottom: 50px">
-        <span class="ai-start-btn-text" style="padding-bottom: 50px; font-size: xx-large; color: black">무엇이든 물어보세요</span>
-        <span class="ai-start-btn-text-2" style="font-size: x-large; color: black">클릭하여 시작하기</span>
+        <span class="ai-start-btn-text"
+              style="padding-bottom: 50px; font-size: xx-large; color: black"
+              th:text="#{ask.anything}">무엇이든 물어보세요</span>
+        <span class="ai-start-btn-text-2"
+              style="font-size: x-large; color: black"
+              th:text="#{click.to.start}">클릭하여 시작하기</span>
     </button>
 </div>
 
@@ -413,7 +419,7 @@
     <div class="ai-side-after">
         <div class="messages-area">
             <div class="message">
-                <p class="from-ai margin-t_one" style="margin-top: 10px">
+                <p class="from-ai margin-t_one" style="margin-top: 10px" th:text="#{ai.greeting}">
                     안녕하세요 무엇을 도와드릴까요?
                     하단의 질문하기 버튼을 누르고 말씀해주세요.
                     빨간 정지 버튼을 누르면 음성 인식이 중지됩니다.
@@ -423,14 +429,16 @@
         <div class="ai-side-footer">
             <div class="ai-mic">
                 <div class="buttons">
-                    <button id="startButton-ai" class="btn-hover color-3">질문하기</button>
+                    <button id="startButton-ai" class="btn-hover color-3"
+                            th:text="#{ask.question}">질문하기</button>
                     <img class="ai-mic-logo" src="/kiosk/img/aichat/whitemic_logo_vector.png" alt="mic-logo">
                 </div>
             </div>
 
             <div class="admin-mic">
                 <div class="buttons">
-                    <button id="startButton-admin" class="btn-hover color-10">직원 연결</button>
+                    <button id="startButton-admin" class="btn-hover color-10"
+                            th:text="#{connect.staff}">직원 연결</button>
                     <img class="admin-mic-logo" src="/kiosk/img/aichat/agent_logo_vector.png" alt="agent-logo">
                 </div>
             </div>
@@ -438,7 +446,8 @@
             <div class="stop-and-send">
                 <label for="status-and-text"></label>
                 <textarea id="status-and-text" class="alert alert-secondary"
-                          placeholder="녹음된 내용이 표시됩니다." rows="3" required></textarea>
+                          th:placeholder="#{recorded.text.placeholder}" rows="3" required>
+                </textarea>
 
                 <button id="stopButton" class="btn btn-danger" type="button" disabled>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stop-circle-fill" viewBox="0 0 16 16">

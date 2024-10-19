@@ -181,8 +181,3 @@ function initializeRecording() {
         console.error('DOM 요소 참조 실패');
     }
 }
-
-
-
-
-

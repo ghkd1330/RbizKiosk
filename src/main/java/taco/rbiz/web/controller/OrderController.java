@@ -48,6 +48,8 @@ public class OrderController {
         order.setTakeout(isTakeout);
         order.setPaymentMethod(paymentMethod);
         order.setReceipt(isReceipt);
+        order.setTotalPrice(cart.getTotalPrice());
+        order.setTotalQuantity(cart.getTotalQuantity());
 
         // 주문 저장 또는 처리
         orderService.saveOrder(order);

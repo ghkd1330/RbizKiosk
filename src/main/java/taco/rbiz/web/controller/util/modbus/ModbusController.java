@@ -1,4 +1,4 @@
-package taco.rbiz.web.controller.util;
+package taco.rbiz.web.controller.util.modbus;
 
 import com.ghgande.j2mod.modbus.facade.ModbusTCPMaster;
 import com.ghgande.j2mod.modbus.procimg.InputRegister;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ModbusController {
 
-    @Value("${master.ip}")
+//    @Value("${master.ip}")
     private String MASTER_IP; // Master IP
     private static final int MASTER_PORT = 502; // Modbus TCP 기본 포트
     private static final int SLAVE_ID = 255; // Slave ID

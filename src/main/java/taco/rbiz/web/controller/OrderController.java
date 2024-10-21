@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import taco.rbiz.domain.model.Cart;
 import taco.rbiz.domain.model.Order;
+import taco.rbiz.domain.model.util.OrderQueue;
 import taco.rbiz.domain.service.OrderService;
 
 @Slf4j
@@ -17,6 +18,7 @@ import taco.rbiz.domain.service.OrderService;
 public class OrderController {
 
     private final OrderService orderService;
+    private final OrderQueue orderQueue;
 
     @PostMapping("/order/submit")
     public String submitOrder(@RequestParam(value = "diningOption", required = false) String diningOption,
@@ -53,6 +55,9 @@ public class OrderController {
 
         // 주문 저장 또는 처리
         orderService.saveOrder(order);
+
+        // 주문을 OrderQueue에 추가
+        orderQueue.addOrder(order);
 
         // 주문 완료 후 장바구니 비우기
         session.removeAttribute("userCart");

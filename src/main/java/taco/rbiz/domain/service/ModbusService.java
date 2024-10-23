@@ -80,8 +80,9 @@ public class ModbusService {
                             // wait(100) 밀리초 (필요에 따라 추가)
                             Thread.sleep(100);
 
-                            // 주소 100에 flag 1로 설정
+                            // Wait : 주소 100에 flag 1로 설정
                             master.writeSingleRegister(SLAVE_ID, 100, new SimpleRegister(1));
+                            log.info("Wait set to 1 at address 100");
 
                             // 주문 정보 전송 (101 ~ 112)
                             sendOrderToModbus(order);

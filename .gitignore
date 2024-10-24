@@ -7,6 +7,7 @@ build/
 
 ### applicaton.properties ###
 src/main/resources/application.properties
+src/main/resources/env.properties
 
 ### STS ###
 .apt_generated

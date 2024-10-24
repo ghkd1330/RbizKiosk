@@ -40,8 +40,8 @@ public class ModbusService {
     @PostConstruct
     public void init() {
         scheduledExecutorService = Executors.newScheduledThreadPool(1);
-        scheduledExecutorService.schedule(this::attemptConnectionWithRetry, 15, TimeUnit.SECONDS);
-        connect();
+        log.info("Starting Modbus connection retry mechanism after 15 seconds delay.");
+        scheduledExecutorService.scheduleWithFixedDelay(this::attemptConnectionWithRetry, 15, 10, TimeUnit.SECONDS); // 15초 후부터 10초마다 재시도
     }
 
     @PreDestroy
@@ -57,11 +57,10 @@ public class ModbusService {
     // Modbus Master에 연결을 시도하는 메소드 (재시도 포함)
     private void attemptConnectionWithRetry() {
         try {
+            log.info("Attempting to connect to Modbus Master...");
             connect(); // 연결 시도
         } catch (Exception e) {
-            log.error("Modbus 연결 실패, 10초 후 재시도 예정: ", e);
-            // 연결 실패 시 10초 후 재시도
-            scheduledExecutorService.schedule(this::attemptConnectionWithRetry, 10, TimeUnit.SECONDS);
+            log.error("Failed to connect to Modbus Master, retrying in 10 seconds: ", e);
         }
     }
 
@@ -70,11 +69,11 @@ public class ModbusService {
             master = new ModbusTCPMaster(MASTER_IP, MASTER_PORT);
             master.setTimeout(3000);
             master.connect();
-            log.info("Connected to Modbus Master at {}:{}", MASTER_IP, MASTER_PORT);
+            log.info("Successfully connected to Modbus Master at {}:{}", MASTER_IP, MASTER_PORT);
         } catch (Exception e) {
-            log.error("Failed to connect to Modbus Master: ", e);
+            log.error("Modbus connection failed: ", e);
             master = null;
-            throw new RuntimeException("Modbus 연결 실패");
+            throw new RuntimeException("Modbus connection failed");
         }
     }
 

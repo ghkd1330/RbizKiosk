@@ -15,6 +15,9 @@ import taco.rbiz.domain.model.Product;
 import taco.rbiz.domain.model.util.OrderQueue;
 
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -26,15 +29,18 @@ public class ModbusService {
     private static final int MASTER_PORT = 502; // Modbus TCP 기본 포트
     private static final int SLAVE_ID = 255; // Slave ID
     private final OrderQueue orderQueue;
+    private ModbusTCPMaster master;
+    private ScheduledExecutorService scheduledExecutorService;
 
     public ModbusService(OrderQueue orderQueue) {
         this.orderQueue = orderQueue;
     }
 
-    private ModbusTCPMaster master;
 
     @PostConstruct
     public void init() {
+        scheduledExecutorService = Executors.newScheduledThreadPool(1);
+        scheduledExecutorService.schedule(this::attemptConnectionWithRetry, 15, TimeUnit.SECONDS);
         connect();
     }
 
@@ -42,6 +48,20 @@ public class ModbusService {
     public void cleanup() {
         if (master != null) {
             master.disconnect();
+        }
+        if (scheduledExecutorService != null) {
+            scheduledExecutorService.shutdown();
+        }
+    }
+
+    // Modbus Master에 연결을 시도하는 메소드 (재시도 포함)
+    private void attemptConnectionWithRetry() {
+        try {
+            connect(); // 연결 시도
+        } catch (Exception e) {
+            log.error("Modbus 연결 실패, 10초 후 재시도 예정: ", e);
+            // 연결 실패 시 10초 후 재시도
+            scheduledExecutorService.schedule(this::attemptConnectionWithRetry, 10, TimeUnit.SECONDS);
         }
     }
 
@@ -54,6 +74,7 @@ public class ModbusService {
         } catch (Exception e) {
             log.error("Failed to connect to Modbus Master: ", e);
             master = null;
+            throw new RuntimeException("Modbus 연결 실패");
         }
     }
 

@@ -14,7 +14,10 @@ import taco.rbiz.domain.model.Order;
 import taco.rbiz.domain.model.Product;
 import taco.rbiz.domain.model.util.OrderQueue;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -106,7 +109,7 @@ public class ModbusService {
     private void sendOrderToModbus(Order order) throws ModbusException {
         // 최대 4개의 제품 단위를 처리하기 위한 배열 초기화
         int[] productCodes = {5, 5, 5, 5}; // 기본값 5
-        int[] saladOptions = {1, 1, 1, 1}; // 기본값 1로 변경
+        int[] saladOptions = {8, 8, 8, 8}; // 기본값 1로 변경
         int[] drinkOptions = {0, 0, 0, 0}; // 기본값 0
 
         // 제품 코드 매핑
@@ -120,7 +123,7 @@ public class ModbusService {
                 productCodes[index] = productCode;
 
                 // 샐러드 옵션 처리
-                saladOptions[index] = hasSaladOption(product) ? 0 : 1;
+                saladOptions[index] = getSaladOptionCode(product);
 
                 // 음료 옵션 처리
                 drinkOptions[index] = getDrinkOptionCode(product);
@@ -168,16 +171,41 @@ public class ModbusService {
         return 5;
     }
 
-    private boolean hasSaladOption(Product product) {
+    private int getSaladOptionCode(Product product) {
         Map<String, Object> options = product.getOptions();
-        // salad가 키로 존재하지 않으면 true 반환
-        if (!options.containsKey("salad")) {
-            return true;
-        }
-        // salad가 키로 존재하고, 값이 null이 아니고 빈 리스트가 아니라면 false 반환
         Object saladOption = options.get("salad");
-        return saladOption == null || !((Iterable<?>) saladOption).iterator().hasNext();
+        Set<String> saladOptionsSet = new HashSet<>();
+
+        if (saladOption != null && saladOption instanceof Collection) {
+            for (Object option : (Collection<?>) saladOption) {
+                saladOptionsSet.add(option.toString());
+            }
+        }
+
+        // Mapping salad options to specific return values
+        if (saladOptionsSet.isEmpty()) {
+            return 1;
+        } else if (saladOptionsSet.equals(Set.of("콘 적게"))) {
+            return 2;
+        } else if (saladOptionsSet.equals(Set.of("양상추 적게"))) {
+            return 3;
+        } else if (saladOptionsSet.equals(Set.of("올리브 적게"))) {
+            return 4;
+        } else if (saladOptionsSet.equals(Set.of("콘 적게", "양상추 적게"))) {
+            return 5;
+        } else if (saladOptionsSet.equals(Set.of("콘 적게", "올리브 적게"))) {
+            return 6;
+        } else if (saladOptionsSet.equals(Set.of("양상추 적게", "올리브 적게"))) {
+            return 7;
+        } else if (saladOptionsSet.equals(Set.of("콘 적게", "양상추 적게", "올리브 적게"))) {
+            return 8;
+        } else {
+            // If the combination doesn't match any predefined case
+            log.warn("Unexpected salad options: {}", saladOptionsSet);
+            return 1; // Default return value
+        }
     }
+
 
     private int getDrinkOptionCode(Product product) {
         Map<String, Object> options = product.getOptions();

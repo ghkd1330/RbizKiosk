@@ -18,7 +18,7 @@ public class Order {
     private String paymentMethod; // 결제 방법, "cash" 또는 "credit"
     private boolean receipt; // 영수증 출력 여부
     private LocalDateTime orderTime; // 주문 시간
-    private double totalPrice; // 주문 총액
+    private Integer totalPrice; // 주문 총액
     private Integer totalQuantity; // 주문 총 수량
 
     public Order() {
@@ -26,7 +26,7 @@ public class Order {
         this.orderTime = LocalDateTime.now();
     }
 
-    public Order(List<Product> products, boolean takeout, String paymentMethod, boolean receipt, double totalPrice, Integer totalQuantity) {
+    public Order(List<Product> products, boolean takeout, String paymentMethod, boolean receipt, Integer totalPrice, Integer totalQuantity) {
         this();
         this.products = products;
         this.takeout = takeout;

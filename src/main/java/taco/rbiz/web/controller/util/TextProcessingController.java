@@ -111,7 +111,7 @@ public class TextProcessingController {
                 "<규칙>\n" +
                 "1. 무조건 질문에 사용된 언어로 답변해야 한다. 예를 들어, 영어로 질문하면 답변도 무조건 영어이어야 한다.\n" +
                 "2. 답변을 너무 길게 하면 안된다.\n" +
-                "3. 매장에서 고객을 응대하는 것처럼 친절한 말투로 답변해야 한다.";
+                "3. 매장에서 고객을 응대하는 것처럼 친절한 말투로 답변해야 한다.\n";
 
         JSONObject systemMessage = new JSONObject();
         systemMessage.put("role", "system");

@@ -17,8 +17,8 @@ public class Cart {
         items.add(product);
     }
 
-    public double getTotalPrice() {
-        return items.stream().mapToDouble(Product::getPrice).sum();
+    public int getTotalPrice() {
+        return items.stream().mapToInt(Product::getPrice).sum();
     }
 
     public int getTotalQuantity() {

@@ -117,11 +117,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 음료 메뉴 카드 클릭 이벤트 리스너 추가
     cokeCard.addEventListener("click", function() {
-        handleDrinkClick("콜라");
+        handleDrinkClick("아이스티");
     });
 
     spriteCard.addEventListener("click", function() {
-        handleDrinkClick("사이다");
+        handleDrinkClick("이온음료");
     });
 
     // 모달 열릴 때 dimmed 클래스 추가 및 제거
@@ -267,18 +267,18 @@ function handleDrinkClick(drinkName) {
     // 음료 데이터 설정
     let productData = {};
 
-    if (drinkName === "콜라") {
+    if (drinkName === "아이스티") {
         productData = {
-            productName: "콜라",
-            description: "달콤한 맛의 대표, 코카콜라.",
+            productName: "아이스티",
+            description: "상큼한 복숭아 음료.",
             price: 2000,
             selectedOptions: {}, // 옵션이 없으므로 빈 객체
             quantity: 1 // 기본 수량 1
         };
-    } else if (drinkName === "사이다") {
+    } else if (drinkName === "이온음료") {
         productData = {
-            productName: "사이다",
-            description: "톡 쏘는 청량감의 칠성사이다.",
+            productName: "이온음료",
+            description: "시원한 수분 보충",
             price: 2000,
             selectedOptions: {}, // 옵션이 없으므로 빈 객체
             quantity: 1 // 기본 수량 1
@@ -354,12 +354,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div style="margin-top: 20px;">
                 </div>
             `;
-        }, 5000);
+        }, 2000);
 
         // 추가 3초 후에 홈 화면으로 이동
         setTimeout(function() {
             window.location.href = '/'; // 홈 화면의 URL로 변경하세요.
-        }, 8000);
+        }, 5000);
     });
 });
 

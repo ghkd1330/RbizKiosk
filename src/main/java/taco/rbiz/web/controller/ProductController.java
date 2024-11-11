@@ -28,7 +28,8 @@ public class ProductController {
         Product product = new Product();
         product.setProductName((String) payload.get("productName"));
         product.setDescription((String) payload.get("description"));
-        product.setPrice(Double.parseDouble(payload.get("price").toString()));
+        product.setPrice(Integer.parseInt(payload.get("price").toString()));
+        log.info(String.valueOf(product.getPrice()));
 
         Map<String, Object> options = (Map<String, Object>) payload.get("selectedOptions");
 //        if (options == null) {

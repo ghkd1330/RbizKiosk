@@ -16,7 +16,7 @@ public class Product {
     private String id;
     private String productName;
     private String description;
-    private double price;
+    private int price;
     private Map<String, Object> options = new HashMap<>();
     private int quantity;
 
@@ -25,7 +25,7 @@ public class Product {
         this.id = UUID.randomUUID().toString();
     }
 
-    public Product(String productName, String description, double price, Map<String, Object> options, int quantity) {
+    public Product(String productName, String description, int price, Map<String, Object> options, int quantity) {
         this();
         this.productName = productName;
         this.description = description;

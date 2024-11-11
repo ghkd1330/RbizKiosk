@@ -66,7 +66,7 @@ public class CartController {
     public ResponseEntity<Map<String, Object>> getCartSummary(HttpSession session) {
         Cart cart = (Cart) session.getAttribute("userCart");
         int totalQuantity = 0;
-        double totalPrice = 0.0;
+        int totalPrice = 0;
         if (cart != null) {
             for (Product product : cart.getItems()) {
                 totalQuantity += product.getQuantity();

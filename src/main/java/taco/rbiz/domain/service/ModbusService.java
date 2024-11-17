@@ -14,10 +14,7 @@ import taco.rbiz.domain.model.Order;
 import taco.rbiz.domain.model.Product;
 import taco.rbiz.domain.model.util.OrderQueue;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -109,49 +106,114 @@ public class ModbusService {
     }
 
     private void sendOrderToModbus(Order order) throws ModbusException, InterruptedException {
-        // 최대 4개의 제품 단위를 처리하기 위한 배열 초기화
-        int[] productCodes = {5, 5, 5, 5}; // 기본값 5
-        int[] saladOptions = {8, 8, 8, 8}; // 기본값 1로 변경
-        int[] drinkOptions = {0, 0, 0, 0}; // 기본값 0
+        class ProductOption {
+            int productCode;
+            int saladOption;
+            int drinkOption;
 
-        // 제품 코드 매핑
+            public ProductOption(int productCode, int saladOption, int drinkOption) {
+                this.productCode = productCode;
+                this.saladOption = saladOption;
+                this.drinkOption = drinkOption;
+            }
+        }
+
+        // List to hold product options
+        List<ProductOption> productOptionList = new ArrayList<>();
+
+        // Product code mapping
         for (int i = 0, index = 0; i < order.getProducts().size() && index < 4; i++) {
             Product product = order.getProducts().get(i);
             int quantity = product.getQuantity();
 
             for (int q = 0; q < quantity && index < 4; q++, index++) {
-                // 제품 코드 결정
+                // Determine product code
                 int productCode = getProductCode(product);
-                productCodes[index] = productCode;
 
-                // 샐러드 옵션 처리
-                saladOptions[index] = getSaladOptionCode(product);
+                // Process salad option
+                int saladOption = getSaladOptionCode(product);
 
-                // 음료 옵션 처리
-                drinkOptions[index] = getDrinkOptionCode(product);
+                // Process drink option
+                int drinkOption = getDrinkOptionCode(product);
+
+                // Add to list
+                productOptionList.add(new ProductOption(productCode, saladOption, drinkOption));
             }
         }
 
-        // 주소 101~104에 제품 코드 전송
+        // Fill up with default values if less than 4 items
+        while (productOptionList.size() < 4) {
+            productOptionList.add(new ProductOption(5, 8, 0)); // Default values
+        }
+
+        // Sort the list based on productCode
+        productOptionList.sort(Comparator.comparingInt(po -> po.productCode));
+
+        // Send data to Modbus
         for (int i = 0; i < 4; i++) {
-            log.info("Product Code {}: {}", i, productCodes[i]);
-            master.writeSingleRegister(SLAVE_ID, 101 + i, new SimpleRegister(productCodes[i]));
+            ProductOption po = productOptionList.get(i);
+            log.info("Product Code {}: {}", i, po.productCode);
+            master.writeSingleRegister(SLAVE_ID, 101 + i, new SimpleRegister(po.productCode));
             Thread.sleep(100);
         }
 
-        // 주소 105~108에 샐러드 옵션 전송
         for (int i = 0; i < 4; i++) {
-            log.info("Salad Option {}: {}", i, saladOptions[i]);
-            master.writeSingleRegister(SLAVE_ID, 105 + i, new SimpleRegister(saladOptions[i]));
+            ProductOption po = productOptionList.get(i);
+            log.info("Salad Option {}: {}", i, po.saladOption);
+            master.writeSingleRegister(SLAVE_ID, 105 + i, new SimpleRegister(po.saladOption));
             Thread.sleep(100);
         }
 
-        // 주소 109~112에 음료 옵션 전송
         for (int i = 0; i < 4; i++) {
-            log.info("Drink Option {}: {}", i, drinkOptions[i]);
-            master.writeSingleRegister(SLAVE_ID, 109 + i, new SimpleRegister(drinkOptions[i]));
+            ProductOption po = productOptionList.get(i);
+            log.info("Drink Option {}: {}", i, po.drinkOption);
+            master.writeSingleRegister(SLAVE_ID, 109 + i, new SimpleRegister(po.drinkOption));
             Thread.sleep(100);
         }
+//
+//        // 최대 4개의 제품 단위를 처리하기 위한 배열 초기화
+//        int[] productCodes = {5, 5, 5, 5}; // 기본값 5
+//        int[] saladOptions = {8, 8, 8, 8}; // 기본값 1로 변경
+//        int[] drinkOptions = {0, 0, 0, 0}; // 기본값 0
+//
+//        // 제품 코드 매핑
+//        for (int i = 0, index = 0; i < order.getProducts().size() && index < 4; i++) {
+//            Product product = order.getProducts().get(i);
+//            int quantity = product.getQuantity();
+//
+//            for (int q = 0; q < quantity && index < 4; q++, index++) {
+//                // 제품 코드 결정
+//                int productCode = getProductCode(product);
+//                productCodes[index] = productCode;
+//
+//                // 샐러드 옵션 처리
+//                saladOptions[index] = getSaladOptionCode(product);
+//
+//                // 음료 옵션 처리
+//                drinkOptions[index] = getDrinkOptionCode(product);
+//            }
+//        }
+//
+//        // 주소 101~104에 제품 코드 전송
+//        for (int i = 0; i < 4; i++) {
+//            log.info("Product Code {}: {}", i, productCodes[i]);
+//            master.writeSingleRegister(SLAVE_ID, 101 + i, new SimpleRegister(productCodes[i]));
+//            Thread.sleep(100);
+//        }
+//
+//        // 주소 105~108에 샐러드 옵션 전송
+//        for (int i = 0; i < 4; i++) {
+//            log.info("Salad Option {}: {}", i, saladOptions[i]);
+//            master.writeSingleRegister(SLAVE_ID, 105 + i, new SimpleRegister(saladOptions[i]));
+//            Thread.sleep(100);
+//        }
+//
+//        // 주소 109~112에 음료 옵션 전송
+//        for (int i = 0; i < 4; i++) {
+//            log.info("Drink Option {}: {}", i, drinkOptions[i]);
+//            master.writeSingleRegister(SLAVE_ID, 109 + i, new SimpleRegister(drinkOptions[i]));
+//            Thread.sleep(100);
+//        }
     }
 
     private int getProductCode(Product product) {
@@ -188,22 +250,14 @@ public class ModbusService {
         }
 
         // Mapping salad options to specific return values
-        if (saladOptionsSet.isEmpty()) {
+        if (saladOptionsSet.isEmpty()) { // 선택 안함 : Salad 전부 넣기 (콘 + 올리브)
             return 1;
-        } else if (saladOptionsSet.equals(Set.of("콘 적게"))) {
+        } else if (saladOptionsSet.equals(Set.of("콘 빼기"))) {
             return 2;
-        } else if (saladOptionsSet.equals(Set.of("양상추 적게"))) {
+        } else if (saladOptionsSet.equals(Set.of("올리브 빼기"))) {
             return 3;
-        } else if (saladOptionsSet.equals(Set.of("올리브 적게"))) {
+        } else if (saladOptionsSet.equals(Set.of("콘 빼기", "올리브 빼기"))) {
             return 4;
-        } else if (saladOptionsSet.equals(Set.of("콘 적게", "양상추 적게"))) {
-            return 5;
-        } else if (saladOptionsSet.equals(Set.of("콘 적게", "올리브 적게"))) {
-            return 6;
-        } else if (saladOptionsSet.equals(Set.of("양상추 적게", "올리브 적게"))) {
-            return 7;
-        } else if (saladOptionsSet.equals(Set.of("콘 적게", "양상추 적게", "올리브 적게"))) {
-            return 8;
         } else {
             // If the combination doesn't match any predefined case
             log.warn("Unexpected salad options: {}", saladOptionsSet);
